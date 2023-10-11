@@ -50,7 +50,7 @@ void CubeExplorer::OnRR(vector<string>::iterator& iter) {
 	handState.right.isReady = !handState.right.isReady;		//设置右爪状态参数
 	for (auto it = iter + 1; it != strNorVec.end(); it++) {	//由于魔方整体转动后，面的定义发生变化，
 		if (*it == "U") *it = "B";							//因此需要遍历之后的操作，全部调整为转变后的定义
-		else if (*it == "B") *it = "D";						//
+		else if (*it == "B") *it = "D";						
 		else if (*it == "D") *it = "F";
 		else if (*it == "F") *it = "U";
 		else if (*it == "U'") *it = "B'";
