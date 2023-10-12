@@ -85,8 +85,7 @@ struct CubieCube
     int index_corner_o;
     int index_corner_p;
     int index_edge_o;
-    int index_mid_edge_p; //
-    int index_other_edge_p;
+    int index_edge_p; //
 };
 
 struct CubieCube_with_color
@@ -96,8 +95,7 @@ struct CubieCube_with_color
     int index_corner_o;
     int index_corner_p;
     int index_edge_o;
-    int index_mid_edge_p; //
-    int index_other_edge_p;
+    int index_edge_p; //
 };
 
 class CubeGenerate
@@ -106,10 +104,14 @@ class CubeGenerate
 private:
     CubieCube Init;
     CubieCube Move[6];
-    CubieCube CubeState;
+    CubieCube cube_state;
     string disrupt_string; // 打乱公式
 public:
     CubeGenerate();                          // 初始化
+    void EncodeCorner(void); // encoding
+    void DecodeCorner(void); // decoding
+    void EncodeEdge(void);
+    void DecodeEdge(void);
     void EncodeCorner(CubieCube Cube_State); // encoding
     void DecodeCorner(CubieCube Cube_State); // decoding
     void EncodeEdge(CubieCube Cube_State);
