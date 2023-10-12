@@ -145,3 +145,24 @@ void CubeGenerate::EncodeEdge(CubieCube Cube_State)
 void CubeGenerate::DecodeEdge(CubieCube Cube_State)
 {
 }
+
+void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result)
+{
+	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
+	{
+		result->co[i].c = origin->co[transform->co[i].c].c;
+		result->co[i].o = (origin->co[transform->co[i].c].o + transform->co[i].o) % 3;
+	}
+	return;
+}
+
+void CubeGenerate::EdgeTramsform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result)
+{
+	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
+	{
+		result->eo[i].e = origin->eo[transform->eo[i].e].e;
+		result->eo[i].o = (origin->eo[transform->eo[i].e].o + transform->eo[i].o) % 2;
+	}
+	return;
+}
+
