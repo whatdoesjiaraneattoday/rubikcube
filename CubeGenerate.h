@@ -1,6 +1,6 @@
 #ifndef CUBE_GENERATE_H
 #define CUBE_GENERATE_H
-#endif
+
 #include <vector>
 #include <string>
 #include <fstream>
@@ -118,3 +118,4 @@ public:
 };
 // 求组合数 n是下标，m是上标
 long long n_C_m(int n, int m);
+#endif
