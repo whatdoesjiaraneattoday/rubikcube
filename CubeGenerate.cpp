@@ -225,8 +225,7 @@ void CubeGenerate::DecodeEdge(void)
 	}
 }
 
-
-void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* transform,  CubieCube* result) // 角块变换 
+void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* transform, CubieCube* result) // 角块变换 
 {
 	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
 	{
