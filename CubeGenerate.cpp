@@ -224,3 +224,26 @@ void CubeGenerate::DecodeEdge(void)
 		}
 	}
 }
+	Cube_State.index_corner_o = index_o; // 方向编码
+}
+
+void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result) // 角块变换 
+{
+	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
+	{
+		result->co[i].c = origin->co[transform->co[i].c].c;
+		result->co[i].o = (origin->co[transform->co[i].c].o + transform->co[i].o) % 3;
+	}
+	return;
+}
+
+void CubeGenerate::EdgeTramsform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result) //棱块变换
+{
+	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
+	{
+		result->eo[i].e = origin->eo[transform->eo[i].e].e;
+		result->eo[i].o = (origin->eo[transform->eo[i].e].o + transform->eo[i].o) % 2;
+	}
+	return;
+}
+

@@ -112,6 +112,9 @@ public:
     void DecodeCorner(void); // decoding
     void EncodeEdge(void);
     void DecodeEdge(void);
+    void CornerTransform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result); // 角块变换
+    void EdgeTramsform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result); // 棱块变换
+
 };
 // 求组合数 n是下标，m是上标
 long long n_C_m(int n, int m);
