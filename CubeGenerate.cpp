@@ -224,10 +224,8 @@ void CubeGenerate::DecodeEdge(void)
 		}
 	}
 }
-	Cube_State.index_corner_o = index_o; // 方向编码
-}
 
-void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result) // 角块变换 
+void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* transform, CubieCube* result) // 角块变换 
 {
 	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
 	{
@@ -237,7 +235,7 @@ void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* tra
 	return;
 }
 
-void CubeGenerate::EdgeTramsform(const CubieCube* origin, const CubieCube* transform, const CubieCube* result) //棱块变换
+void CubeGenerate::EdgeTramsform(const CubieCube* origin, const CubieCube* transform, CubieCube* result) //棱块变换
 {
 	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
 	{
