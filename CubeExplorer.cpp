@@ -1,6 +1,6 @@
 #include"CubeExplorer.h"
 
-CubeExplorer::CubeExplorer(char* cstr,HandState& hs):target(cstr),handState(hs){}
+CubeExplorer::CubeExplorer(char* cstr,const HandState& hs):target(cstr),handState(hs){}
 
 void CubeExplorer::SetTarget(string str) { target = str; }
 

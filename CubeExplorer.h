@@ -33,7 +33,7 @@ enum class Operation {
 	_R ,	//右手逆时针转动
 	F,		//左手顺时针转动
 	_F ,	//左手逆时针转动
-	R2 ,	//R面转动180°
+	R2 ,	//R面转动180°	
 	F2 ,	//F面转动180°
 	LeftLoose,	//左手松开		
 	LeftTight,	//左手夹紧
@@ -56,7 +56,7 @@ public:
 	HandState handState;	//自定义类HandState类型，表示当前机械手状态
 	int transCnt = 0;					//记录魔方翻转次数
 	
-	CubeExplorer(char* cstr="", HandState& hs=HandState(true,true,true,true));
+	CubeExplorer(char* cstr="", const HandState &hs=HandState(true,true,true,true));
 	
 	friend ostream& operator<<(ostream&, const Operation&);		//友元操作符重载函数支持Operation类型和cout的直接使用，主要用于调试
 
