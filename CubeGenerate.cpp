@@ -281,7 +281,3 @@ void initcpMoveTable() // 初始化角块位置转动表
 		}
 	}
 }
-
-void 
-
-
