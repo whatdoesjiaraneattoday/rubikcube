@@ -51,6 +51,21 @@ typedef enum
     y,
     b
 } Color;
+typedef enum
+{
+    MoveR,
+    Move_R,
+    MoveR2,
+    MoveF,
+    Move_F,
+    MoveF2,
+    MoveRR,
+    Move_RR,
+    MoveRR2,
+    MoveFF,
+    Move_FF,
+    MoveFF2
+} Movement;
 
 struct corner // 角块
 {
@@ -104,18 +119,21 @@ class CubeGenerate
 private:
     CubieCube Init;
     CubieCube Move[6];
-    CubieCube cube_state;
     string disrupt_string; // 打乱公式
 public:
+    CubieCube cube_state;
     CubeGenerate();                          // 初始化
     void EncodeCorner(void); // encoding
     void DecodeCorner(void); // decoding
     void EncodeEdge(void);
     void DecodeEdge(void);
-    void CornerTransform(const CubieCube* origin, const CubieCube* transform, CubieCube* result); // 角块变换
-    void EdgeTramsform(const CubieCube* origin, const CubieCube* transform, CubieCube* result); // 棱块变换
-
+    void CornerTransform(const CubieCube* transform); // 角块变换
+    void EdgeTransform(const CubieCube* transform); // 棱块变换
+    void CubeMove(int m);
 };
 // 求组合数 n是下标，m是上标
 long long n_C_m(int n, int m);
+
+void initcpMoveTable(); // 初始化角块位置转动表
+
 #endif

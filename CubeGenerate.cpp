@@ -11,6 +11,9 @@
 
 #include "CubeGenerate.h"
 using namespace std;
+
+CubieCube movement[6];
+
 long long n_C_m(int n, int m)
 
 {
@@ -194,11 +197,11 @@ void CubeGenerate::DecodeEdge(void)
 	}
 	if (count_o[0] % 2 != 0)
 	{
-		cube_state.co[BR].o = 0;
+		cube_state.eo[BR].o = 0;
 	}
 	else
 	{
-		cube_state.co[BR].o = 1;
+		cube_state.eo[BR].o = 1;
 	}
 	//位置解码
 	int A_11[12]={1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,3628800,39916800};
@@ -225,23 +228,60 @@ void CubeGenerate::DecodeEdge(void)
 	}
 }
 
-void CubeGenerate::CornerTransform(const CubieCube* origin, const CubieCube* transform, CubieCube* result) // 角块变换 
+void CubeGenerate::CornerTransform(const CubieCube* transform) // 角块变换 
 {
 	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
 	{
-		result->co[i].c = origin->co[transform->co[i].c].c;
-		result->co[i].o = (origin->co[transform->co[i].c].o + transform->co[i].o) % 3;
+		cube_state.co[i].c = cube_state.co[transform->co[i].c].c;
+		cube_state.co[i].o = (cube_state.co[transform->co[i].c].o + transform->co[i].o) % 3;
 	}
 	return;
 }
 
-void CubeGenerate::EdgeTramsform(const CubieCube* origin, const CubieCube* transform, CubieCube* result) //棱块变换
+void CubeGenerate::EdgeTransform(const CubieCube* transform) //棱块变换
 {
 	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
 	{
-		result->eo[i].e = origin->eo[transform->eo[i].e].e;
-		result->eo[i].o = (origin->eo[transform->eo[i].e].o + transform->eo[i].o) % 2;
+		cube_state.eo[i].e = cube_state.eo[transform->eo[i].e].e;
+		cube_state.eo[i].o = (cube_state.eo[transform->eo[i].e].o + transform->eo[i].o) % 2;
 	}
 	return;
 }
+
+void CubeGenerate::CubeMove(int m) // 魔方转动
+{
+	CornerTransform(&movement[m]);
+	EdgeTransform(&movement[m]);
+	return;
+}
+
+const int NMove = 18; // 可进行的操作数量，6个面，每个面可执行3个方向(90° -90° 180°)操作
+const int NCP = 40320; // 角块位置排列的状态数量
+const int NEP_UD = 40320; // 上下层棱块位置排列的状态数量
+
+int movement[6]; // 六种基本操作
+int cpMoveTable[NCP][NMove]; // 存储角块位置转动表，索引第一项为初始状态，第二项为执行的操作
+
+
+void initcpMoveTable() // 初始化角块位置转动表
+{
+	CubeGenerate a;
+	for (int i = 0; i <= NCP - 1; i++)
+	{
+		a.cube_state.index_corner_o = i;
+		a.DecodeCorner();
+		for (int j = U; i <= B; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				a.CornerTransform(&movement[j]);
+				cpMoveTable[i][j * 3 + k] = a.cube_state.index_corner_o;
+			}
+			a.CornerTransform(&movement[j]);
+		}
+	}
+}
+
+void 
+
 
