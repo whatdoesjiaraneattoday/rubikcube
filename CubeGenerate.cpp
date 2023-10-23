@@ -194,11 +194,11 @@ void CubeGenerate::DecodeEdge(void)
 	}
 	if (count_o[0] % 2 != 0)
 	{
-		cube_state.co[BR].o = 0;
+		cube_state.eo[BR].o = 0;
 	}
 	else
 	{
-		cube_state.co[BR].o = 1;
+		cube_state.eo[BR].o = 1;
 	}
 	//位置解码
 	int A_11[12]={1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,3628800,39916800};

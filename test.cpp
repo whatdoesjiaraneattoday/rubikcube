@@ -19,7 +19,7 @@ void jie_cheng(int n)
 int main()
 {
 
-	cin >> str;
+	/*cin >> str;
 
 	int index_p = 0;
 	int index_o = 0;
@@ -32,6 +32,17 @@ int main()
 			x++;
 		}
 	}
-	cout<<index_p;
+	*/
+	//cout<<index_p;
+	struct state
+	{
+		int i;
+		state(int _i)
+		{
+			i=_i;
+		}
+	};
+	state &s=state(5);
+	cout<<s.i;
 	return 0;
 }

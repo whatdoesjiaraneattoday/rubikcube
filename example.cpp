@@ -322,7 +322,7 @@ void edgeMultiply(const Cube* a, const Cube* b, Cube* ab)//棱块的方向和位
 	return;
 }
  
-void edgeMultiply1(const Cube* a, const Cube* b, Cube* ab)//棱块的方向和位置 
+void edgeMultiply1(const Cube* a, const Cube* b, Cube* ab)//棱块的和位置 
 {
 	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
 	{
@@ -362,7 +362,7 @@ int cpMoveTable[NCP][Nmove];
 int epMoveTable1[NEP1][Nmove];
 int epMoveTable2[NEP2][Nmove];
  
-void initcpMoveTable()
+void initcpMoveTable()//阶段2
 {
 	Cube a, b;
 	int i, j, m;
@@ -384,7 +384,7 @@ void initcpMoveTable()
 	return;
 }
  
-void initepMoveTable1()
+void initepMoveTable1()//阶段2
 {
 	Cube a, b;
 	int i, j, m;
@@ -406,7 +406,7 @@ void initepMoveTable1()
 	return;
 }
  
-void initepMoveTable2()
+void initepMoveTable2()//阶段2
 {
 	Cube a, b;
 	int i, j, m;
@@ -427,7 +427,7 @@ void initepMoveTable2()
 	return;
 }
  
-void initSliceMoveTable()//初始化中间棱块位置组合转动表 
+void initSliceMoveTable()//初始化中间棱块位置组合转动表 阶段1
 {
 	Cube a, b;
 	int i, j, m;
@@ -449,7 +449,7 @@ void initSliceMoveTable()//初始化中间棱块位置组合转动表
 	return;
 }
  
-void initTwistMoveTable()//初始化角块方向转动表 
+void initTwistMoveTable()//初始化角块方向转动表 阶段1
 {
 	Cube a, b;
 	int i, j, m;
@@ -470,7 +470,7 @@ void initTwistMoveTable()//初始化角块方向转动表
 	return;
 }
  
-void initFlipMoveTable()//初始化棱块方向转动表 
+void initFlipMoveTable()//初始化棱块方向转动表 阶段1
 {
 	Cube a, b;
 	int i, j, m;
