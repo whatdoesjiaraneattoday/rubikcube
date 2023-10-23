@@ -56,7 +56,7 @@ public:
 	HandState handState;	//自定义类HandState类型，表示当前机械手状态
 	int transCnt = 0;					//记录魔方翻转次数
 	
-	CubeExplorer(char* cstr="", HandState hs=HandState(true,true,true,true));
+	CubeExplorer(char* cstr="", HandState& hs=HandState(true,true,true,true));
 	
 	friend ostream& operator<<(ostream&, const Operation&);		//友元操作符重载函数支持Operation类型和cout的直接使用，主要用于调试
 

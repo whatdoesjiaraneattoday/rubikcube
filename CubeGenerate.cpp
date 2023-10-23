@@ -258,12 +258,13 @@ void CubeGenerate::CubeMove(int m) // 魔方转动
 const int NMove = 18; // 可进行的操作数量，6个面，每个面可执行3个方向(90° -90° 180°)操作
 const int NCP = 40320; // 角块位置排列的状态数量
 const int NEP_UD = 40320; // 上下层棱块位置排列的状态数量
+const int NTWIST = 2187; // 角块的方向状态数
 
 int movement[6]; // 六种基本操作
 int cpMoveTable[NCP][NMove]; // 存储角块位置转动表，索引第一项为初始状态，第二项为执行的操作
+int epudMoveTable[NEP_UD][NMove]; // 存储上下层棱块位置转动表
 
-
-void initcpMoveTable() // 初始化角块位置转动表
+void InitCpMoveTable() // 初始化角块位置转动表
 {
 	CubeGenerate a;
 	for (int i = 0; i <= NCP - 1; i++)
@@ -279,5 +280,14 @@ void initcpMoveTable() // 初始化角块位置转动表
 			}
 			a.CornerTransform(&movement[j]);
 		}
+	}
+}
+
+void InitEpudMoveTable() // 初始化上下层棱块位置转动表
+{
+	CubeGenerate a;
+	for (int i = 0; i < NEP_UD - 1; i++)
+	{
+		a.cube_state.
 	}
 }
