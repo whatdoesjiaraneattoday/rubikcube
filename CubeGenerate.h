@@ -101,6 +101,9 @@ struct CubieCube
     int index_corner_p;
     int index_edge_o;
     int index_edge_p; //
+    int index_middle_p;
+    int index_other_p;
+    int index_combination;
 };
 
 struct CubieCube_with_color
@@ -111,6 +114,10 @@ struct CubieCube_with_color
     int index_corner_p;
     int index_edge_o;
     int index_edge_p; //
+    int index_middle_p;
+    int index_other_p;
+    int index_combination;
+
 };
 
 class CubeGenerate
@@ -126,7 +133,7 @@ public:
     void EncodeCorner(void); // encoding
     void DecodeCorner(void); // decoding
     void EncodeEdge(void);
-    void DecodeEdge(void);
+    void DecodeEdge(int num);
     void CornerTransform(const CubieCube* transform); // 角块变换
     void EdgeTransform(const CubieCube* transform); // 棱块变换
     void CubeMove(int m);
