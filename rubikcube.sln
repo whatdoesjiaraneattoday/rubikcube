@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rubikcube", "rubikcube.vcxproj", "{B498E1AC-56EF-422E-A277-1F946C890550}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtWidgetsApplication", "QtWidgetsApplication\QtWidgetsApplication.vcxproj", "{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{B498E1AC-56EF-422E-A277-1F946C890550}.Release|x64.Build.0 = Release|x64
 		{B498E1AC-56EF-422E-A277-1F946C890550}.Release|x86.ActiveCfg = Release|Win32
 		{B498E1AC-56EF-422E-A277-1F946C890550}.Release|x86.Build.0 = Release|Win32
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Debug|x64.ActiveCfg = Debug|x64
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Debug|x64.Build.0 = Debug|x64
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Debug|x86.ActiveCfg = Debug|x64
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Debug|x86.Build.0 = Debug|x64
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Release|x64.ActiveCfg = Release|x64
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Release|x64.Build.0 = Release|x64
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Release|x86.ActiveCfg = Release|x64
+		{9ED8AA29-E919-47E0-B0C1-D8F7134E3A29}.Release|x86.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
