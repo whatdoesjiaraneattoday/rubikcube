@@ -12,8 +12,6 @@
 #include "CubeGenerate.h"
 using namespace std;
 
-CubieCube movement[6];
-
 long long n_C_m(int n, int m)
 
 {
@@ -210,7 +208,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 	int index = 0;
 	int count_o[2] = {0, 0};
 	// 方向解码
-	if (select_num=0)
+	if (select_num==0)
 	{
 		index = cube_state.index_edge_o;
 		for (int i = UR; i <= BR; i++)
@@ -239,7 +237,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 			cube_state.eo[BR].o = 1;
 		}
 	}
-	else if(select_num=1)
+	else if(select_num==1)
 	{
 		//位置解码
 		int count[12]={0,0,0,0,0,0,0,0,0,0,0,0};
@@ -264,7 +262,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 			}
 		}
 	}
-	else if(select_num=2)
+	else if(select_num==2)
 	{
 		//上下层解码
 		index = cube_state.index_other_p;// 
@@ -293,7 +291,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 			cube_state.eo[i].e = Edge(i);
 		}
 	}
-	else if(select_num=3)
+	else if(select_num==3)
 	{
 		index=cube_state.index_middle_p;
 		int count_middle[4]= { 0,0,0,0 };
@@ -322,7 +320,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 		}
 
 	}
-	else if(select_num=4)
+	else if(select_num==4)
 	{
 		index=cube_state.index_combination;
 		int num=4;
@@ -354,7 +352,7 @@ void CubeGenerate::CornerTransform(const CubieCube* transform) // 角块变换
 	return;
 }
 
-void CubeGenerate::EdgeTransform(const CubieCube* transform) //棱块变换
+void CubeGenerate::EdgeTransform(const CubieCube* transform) // 棱块变换
 {
 	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
 	{
@@ -364,6 +362,8 @@ void CubeGenerate::EdgeTransform(const CubieCube* transform) //棱块变换
 	return;
 }
 
+CubieCube movement[6]; // 六种基本操作
+
 void CubeGenerate::CubeMove(int m) // 魔方转动
 {
 	CornerTransform(&movement[m]);
@@ -372,18 +372,24 @@ void CubeGenerate::CubeMove(int m) // 魔方转动
 }
 
 const int NMove = 18; // 可进行的操作数量，6个面，每个面可执行3个方向(90° -90° 180°)操作
-const int NCP = 40320; // 角块位置排列的状态数量
-const int NEP_UD = 40320; // 上下层棱块位置排列的状态数量
-const int NTWIST = 2187; // 角块的方向状态数
+const int NCP = 40320; // 角块位置排列的状态数量 8A8=40320
+const int NEP_UD = 40320; // 上下层棱块在上下层位置排列的状态数量 8A8=40320
+const int NEP_M = 24; // 中间层棱块在中间层位置排列的状态数 4A4=24
+const int NSLICE = 495; // 所有棱块在中间层位置排列的状态数 12C4=495
+const int NTWIST = 2187; // 角块的方向状态数 3^7=2187
+const int NFLIP = 2048; // 棱块的方向状态数 2^11=2048
 
-int movement[6]; // 六种基本操作
 int cpMoveTable[NCP][NMove]; // 存储角块位置转动表，索引第一项为初始状态，第二项为执行的操作
 int epudMoveTable[NEP_UD][NMove]; // 存储上下层棱块位置转动表
+int epmMoveTable[NEP_M][NMove]; // 存储中间层棱块位置转动表
+int sliceMoveTable[NSLICE][NMove]; // 存储中间层棱块位置转动表
+int twistMoveTable[NTWIST][NMove]; // 存储角块方向转动表
+int flipMoveTable[NFLIP][NMove]; // 存储棱块方向转动表
 
 void InitCpMoveTable() // 初始化角块位置转动表
 {
 	CubeGenerate a;
-	for (int i = 0; i <= NCP - 1; i++)
+	for (int i = 0; i < NCP; i++)
 	{
 		a.cube_state.index_corner_o = i;
 		a.DecodeCorner();
@@ -392,18 +398,116 @@ void InitCpMoveTable() // 初始化角块位置转动表
 			for (int k = 0; k < 3; k++)
 			{
 				a.CornerTransform(&movement[j]);
+				a.EncodeCorner();
 				cpMoveTable[i][j * 3 + k] = a.cube_state.index_corner_o;
 			}
 			a.CornerTransform(&movement[j]);
 		}
 	}
+	return;
 }
 
 void InitEpudMoveTable() // 初始化上下层棱块位置转动表
 {
 	CubeGenerate a;
-	for (int i = 0; i < NEP_UD - 1; i++)
+	for (int i = 0; i < NEP_UD; i++)
 	{
-		a.cube_state.
+		a.cube_state.index_other_p = i;
+		a.DecodeEdge(2);
+		for (int j = U; i <= B; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				a.EdgeTransform(&movement[j]);
+				a.EncodeEdge();
+				epudMoveTable[i][j * 3 + k] = a.cube_state.index_other_p;
+			}
+			a.EdgeTransform(&movement[j]);
+		}
 	}
+	return;
+}
+
+void InitEpmMoveTable() // 初始化中间层棱块位置转动表
+{
+	CubeGenerate a;
+	for (int i = 0; i < NEP_M; i++)
+	{
+		a.cube_state.index_middle_p = i;
+		a.DecodeEdge(3);
+		for (int j = U; j <= B; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				a.EdgeTransform(&movement[j]);
+				a.EncodeEdge();
+				epmMoveTable[i][j * 3 + k] = a.cube_state.index_middle_p;
+			}
+			a.EdgeTransform(&movement[j]);
+		}
+	}
+	return;
+}
+
+void InitSliceMoveTable() // 初始化中间层棱块位置转动表
+{
+	CubeGenerate a;
+	for (int i = 0; i < NSLICE; i++)
+	{
+		a.cube_state.index_combination = i;
+		a.DecodeEdge(4);
+		for (int j = U; j <= B; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				a.EdgeTransform(&movement[j]);
+				a.EncodeEdge();
+				sliceMoveTable[i][j * 3 + k] = a.cube_state.index_combination;
+			}
+			a.EdgeTransform(&movement[j]);
+		}
+	}
+	return;
+}
+
+void InitTwistMoveTable() // 初始化角块方向转动表
+{
+	CubeGenerate a;
+	for (int i = 0; i < NTWIST; i++)
+	{
+		a.cube_state.index_corner_o = i;
+		a.DecodeCorner();
+		for (int j = U; j <= B; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				a.CornerTransform(&movement[j]);
+				a.EncodeCorner();
+				twistMoveTable[i][j * 3 + k] = a.cube_state.index_corner_o;
+			}
+			a.CornerTransform(&movement[j]);
+		}
+	}
+	return;
+}
+
+void initFlipMoveTable() // 初始化棱块方向转动表
+{
+	CubeGenerate a;
+	for (int i = 0; i < NFLIP; i++)
+	{
+		a.cube_state.index_edge_o = i;
+		a.DecodeEdge(0);
+		for (int j = U; j <= B; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				a.EdgeTransform(&movement[j]);
+				a.EncodeEdge();
+				flipMoveTable[i][j * 3 + k] = a.cube_state.index_edge_o;
+			}
+			a.EdgeTransform(&movement[j]);
+		}
+	}
+	return;
 }
