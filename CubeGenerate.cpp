@@ -12,8 +12,6 @@
 #include "CubeGenerate.h"
 using namespace std;
 
-CubieCube movement[6];
-
 long long n_C_m(int n, int m)
 
 {
@@ -210,7 +208,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 	int index = 0;
 	int count_o[2] = {0, 0};
 	// 方向解码
-	if (select_num=0)
+	if (select_num==0)
 	{
 		index = cube_state.index_edge_o;
 		for (int i = UR; i <= BR; i++)
@@ -239,7 +237,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 			cube_state.eo[BR].o = 1;
 		}
 	}
-	else if(select_num=1)
+	else if(select_num==1)
 	{
 		//位置解码
 		int count[12]={0,0,0,0,0,0,0,0,0,0,0,0};
@@ -264,7 +262,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 			}
 		}
 	}
-	else if(select_num=2)
+	else if(select_num==2)
 	{
 		//上下层解码
 		index = cube_state.index_other_p;// 
@@ -293,7 +291,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 			cube_state.eo[i].e = Edge(i);
 		}
 	}
-	else if(select_num=3)
+	else if(select_num==3)
 	{
 		index=cube_state.index_middle_p;
 		int count_middle[4]= { 0,0,0,0 };
@@ -322,7 +320,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 		}
 
 	}
-	else if(select_num=4)
+	else if(select_num==4)
 	{
 		index=cube_state.index_combination;
 		int num=4;
@@ -364,6 +362,8 @@ void CubeGenerate::EdgeTransform(const CubieCube* transform) // 棱块变换
 	return;
 }
 
+CubieCube movement[6]; // 六种基本操作
+
 void CubeGenerate::CubeMove(int m) // 魔方转动
 {
 	CornerTransform(&movement[m]);
@@ -379,7 +379,6 @@ const int NSLICE = 495; // 所有棱块在中间层位置排列的状态数 12C4
 const int NTWIST = 2187; // 角块的方向状态数 3^7=2187
 const int NFLIP = 2048; // 棱块的方向状态数 2^11=2048
 
-int movement[6]; // 六种基本操作
 int cpMoveTable[NCP][NMove]; // 存储角块位置转动表，索引第一项为初始状态，第二项为执行的操作
 int epudMoveTable[NEP_UD][NMove]; // 存储上下层棱块位置转动表
 int epmMoveTable[NEP_M][NMove]; // 存储中间层棱块位置转动表

@@ -141,6 +141,11 @@ public:
 // 求组合数 n是下标，m是上标
 long long n_C_m(int n, int m);
 
-void initcpMoveTable(); // 初始化角块位置转动表
+void InitCpMoveTable(); // 初始化角块位置转动表
+void InitEpudMoveTable(); // 初始化上下层棱块位置转动表
+void InitEpmMoveTable(); // 初始化中间层棱块位置转动表
+void InitSliceMoveTable(); // 初始化中间层棱块位置转动表
+void InitTwistMoveTable(); // 初始化角块方向转动表
+void initFlipMoveTable(); // 初始化棱块方向转动表
 
 #endif
