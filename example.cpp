@@ -362,7 +362,7 @@ int cpMoveTable[NCP][Nmove];
 int epMoveTable1[NEP1][Nmove];
 int epMoveTable2[NEP2][Nmove];
  
-void initcpMoveTable()//阶段2
+void initcpMoveTable()//
 {
 	Cube a, b;
 	int i, j, m;
@@ -384,7 +384,7 @@ void initcpMoveTable()//阶段2
 	return;
 }
  
-void initepMoveTable1()//阶段2
+void initepMoveTable1()//
 {
 	Cube a, b;
 	int i, j, m;
@@ -406,7 +406,7 @@ void initepMoveTable1()//阶段2
 	return;
 }
  
-void initepMoveTable2()//阶段2
+void initepMoveTable2()//
 {
 	Cube a, b;
 	int i, j, m;

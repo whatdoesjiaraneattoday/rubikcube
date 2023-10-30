@@ -81,7 +81,7 @@ void CubeGenerate::DecodeCorner(void)
 	{
 		int s = index / A_9[i];
 		index = index % A_9[i];
-		int count_num = index + 1;
+		int count_num = s + 1;
 		for (int j = 7; j >= 0; j--)
 		{
 			if (count[j] == 1)
@@ -91,7 +91,7 @@ void CubeGenerate::DecodeCorner(void)
 			count_num--;
 			if (count_num == 0)
 			{
-				cube_state.co[j].c = Corner(j);
+				cube_state.co[i].c = Corner(j);
 				count[j] = 1;
 			}
 		}
@@ -139,24 +139,25 @@ void CubeGenerate::EncodeEdge(void)
 {
 	int index_p = 0;
 	int index_o = 0;
+	int index_c=0;
 	int x = 1;
 	for (Edge e = UR; e < BR; e = Edge(int(e) + 1))
 	{
 		index_o = 2 * index_o + cube_state.eo[e].o;
 	}
-	cube_state.index_corner_o = index_o; // 方向编码
-	/*
-	组合数编码 
+	cube_state.index_edge_o = index_o; // 方向编码
+	
+	//组合数编码 
 	for (int i = BR; i >= UR; i--)
 	{
-		if ((cube_state.eo[i].e >= FR) && (cube_state.eo[i].e >= FR))
+		if ((cube_state.eo[i].e >= FR) && (cube_state.eo[i].e <= BR))
 		{
-			index_p += n_C_m(11 - i, x);
+			index_c += n_C_m(11 - i, x);
 			x++;
 		}
 	}
-	cube_state.index_edge_p = index_p;
-	*/
+	cube_state.index_combination = index_c;
+	//所有棱块编码
 	for (int i = BR; i > UR; i--)
 	{
 		int s = 0;
@@ -169,63 +170,178 @@ void CubeGenerate::EncodeEdge(void)
 		}
 		index_p = (index_p + s) * i;
 	}
-	cube_state.index_corner_p = index_p; // 康托展开
+	cube_state.index_edge_p = index_p; // 康托展开
+	//上下层编码
+	index_p=0;
+	for (int i = DB; i > UR; i--) 
+	{
+		int s = 0;
+		for (int j = i - 1; j >= UR; j--)
+		{
+			if (cube_state.eo[j].e > cube_state.eo[i].e)
+			{
+				s++;
+			}
+		}
+		 index_p= (index_p + s) * i;
+	}
+	cube_state.index_other_p = index_p; // 康托展开
+	//中间层编码
+	index_p=0;
+	for (int i = BR; i > FR; i--) 
+	{
+		int s = 0;
+		for (int j = i - 1; j >= FR; j--)
+		{
+			if (cube_state.eo[j].e > cube_state.eo[i].e)
+			{
+				s++;
+			}
+		}
+		index_p = (index_p + s) * (i - 8);
+	}
+	cube_state.index_middle_p = index_p; // 康托展开
+
 }
-void CubeGenerate::DecodeEdge(void)
+void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n=2 上下层解码 n=3 中间层解码 n=4 位置解码
 {
+	int A_11[12]={1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,3628800,39916800};
 	int power_2[12] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 	int index = 0;
 	int count_o[2] = {0, 0};
 	// 方向解码
-	index = cube_state.index_corner_o;
-	for (int i = UR; i <= BR; i++)
+	if (select_num=0)
 	{
-		int s = index / power_2[11 - i];
-		index = index % power_2[11 - i];
-		cube_state.eo[i].o = s;
-		switch (cube_state.eo[i].o)
+		index = cube_state.index_edge_o;
+		for (int i = UR; i <= BR; i++)
 		{
-		case 0:
-			count_o[0]++;
-			break;
-		case 1:
-			count_o[1]++;
-			break;
-		default:
-			break;
-		}
-	}
-	if (count_o[0] % 2 != 0)
-	{
-		cube_state.eo[BR].o = 0;
-	}
-	else
-	{
-		cube_state.eo[BR].o = 1;
-	}
-	//位置解码
-	int A_11[12]={1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,3628800,39916800};
-	int count[12]={0,0,0,0,0,0,0,0,0,0,0,0};
-	index = cube_state.index_edge_p;// 位置解码
-	for (int i = 11; i >= 0; i--) // 康托逆展开；
-	{
-		int s = index / A_11[i];
-		index = index % A_11[i];
-		int count_num = index + 1;
-		for (int j = 11; j >= 0; j--)
-		{
-			if (count[j] == 1)
+			int s = index / power_2[11 - i];
+			index = index % power_2[11 - i];
+			cube_state.eo[i].o = s;
+			switch (cube_state.eo[i].o)
 			{
-				continue;
-			}
-			count_num--;
-			if (count_num == 0)
-			{
-				cube_state.eo[j].e = Edge(j);
-				count[j] = 1;
+			case 0:
+				count_o[0]++;
+				break;
+			case 1:
+				count_o[1]++;
+				break;
+			default:
+				break;
 			}
 		}
+		if (count_o[0] % 2 != 0)
+		{
+			cube_state.eo[BR].o = 0;
+		}
+		else
+		{
+			cube_state.eo[BR].o = 1;
+		}
 	}
+	else if(select_num=1)
+	{
+		//位置解码
+		int count[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+		index = cube_state.index_edge_p;// 位置解码
+		for (int i = 11; i >= 0; i--) // 康托逆展开；
+		{
+			int s = index / A_11[i];
+			index = index % A_11[i];
+			int count_num = s + 1;
+			for (int j = 11; j >= 0; j--)
+			{
+				if (count[j] == 1)
+				{
+					continue;
+				}
+				count_num--;
+				if (count_num == 0)
+				{
+					cube_state.eo[i].e = Edge(j);
+					count[j] = 1;
+				}
+			}
+		}
+	}
+	else if(select_num=2)
+	{
+		//上下层解码
+		index = cube_state.index_other_p;// 
+		int count_other[8]= { 0,0,0,0,0,0,0,0 };
+		for (int i = 7; i >= 0; i--)
+		{
+			int s = index / A_11[i]; 
+			index = index % A_11[i]; 
+			int count_num = s + 1;
+			for (int j = 7; j >= 0; j--)
+			{
+				if (count_other[j] == 1)
+				{
+					continue;
+				}
+				count_num--;
+				if (count_num == 0)
+				{
+					cube_state.eo[i].e = Edge(j);
+					count_other[j] = 1;
+				}
+			}
+		}
+		for (int i = 8; i <= 11; i++)
+		{
+			cube_state.eo[i].e = Edge(i);
+		}
+	}
+	else if(select_num=3)
+	{
+		index=cube_state.index_middle_p;
+		int count_middle[4]= { 0,0,0,0 };
+		for (int i = 3; i >= 0; i--)
+		{
+			int s = index / A_11[i];
+			index = index % A_11[i];
+			int count_num = s + 1;
+			for (int j = 3; j >= 0; j--)
+			{
+				if (count_middle[j] == 1)
+				{
+					continue;
+				}
+				count_num--;
+				if (count_num == 0)
+				{
+					cube_state.eo[8 + i].e = Edge(8 + j);
+					count_middle[j] = 1;
+				}
+			}
+		}
+		for (int i = 0; i <= 7; i++)
+		{
+			cube_state.eo[i].e = Edge(i);
+		}
+
+	}
+	else if(select_num=4)
+	{
+		index=cube_state.index_combination;
+		int num=4;
+		for(int i=0;i<=11;i++)
+		{
+			cube_state.eo[i].e=Edge(0);
+		}
+		for (int i = 0; i < 11; i++)
+		{
+			if(index>=n_C_m(11-i,num))
+			{
+				cube_state.eo[i].e=Edge(12-y);
+				index-=n_C_m(11-i,num);
+				num--;
+			}
+		}
+	}
+
+
 }
 
 void CubeGenerate::CornerTransform(const CubieCube* transform) // 角块变换 
