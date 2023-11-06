@@ -355,7 +355,7 @@ void CubeGenerate::EdgeTransform(const CubieCube* transform) // 棱块变换
 	return;
 }
 
-CubieCube movement[6]; // 六种基本操作
+CubieCube movement[6]; // 六种基本操作变换
 
 void CubeGenerate::CubeMove(int m) // 魔方转动
 {
@@ -501,6 +501,203 @@ void initFlipMoveTable() // 初始化棱块方向转动表
 			}
 			a.EdgeTransform(&movement[j]);
 		}
+	}
+	return;
+}
+
+// 存储剪枝表
+int cpPruneTable[NCP];
+int epudPruneTable[NEP_UD];
+int epmPruneTable[NEP_M];
+int twistPruneTable[NTWIST];
+int flipPruneTable[NFLIP];
+int slicePruneTable[NSLICE];
+
+void InitTwistPruneTable() // 角块方向的剪枝表
+{
+	for (int i = 0; i < NTWIST; i++)
+		twistPruneTable[i] = -1; // 初始化表值为-1
+	int depth = 0;
+	int done = 1;
+	int index;
+	twistPruneTable[0] = 0; // 目标状态深度为0
+	while (done < NTWIST) // 若表中已填写的状态数小于总状态数
+	{
+		for (int i = 0; i < NTWIST; i++)
+		{
+			if (twistPruneTable[i] == depth) // 找到该深度下的状态
+			{
+				for (int j = 0; j < NMove; j++)
+				{
+					index = twistMovwTable[i][j]; // 执行18种转动操作
+					if (twistPruneTable[index] == -1) // 若该状态的剪枝表没有填写
+					{
+						twistPruneTable[index] = depth + 1; // 填写深度值
+						done++; // 已填写数加1
+					}
+				}
+			}
+		}
+		depth++; // 到下一层深度
+	}
+	return;
+}
+
+void InitFlipPruneTable() // 棱块方向的剪枝表
+{
+	for (int i = 0; i < NFLIP; i++)
+		flipPruneTable[i] = -1;
+	int depth = 0;
+	int done = 1;
+	int index;
+	flipPruneTable[0] = 0;
+	while (done < NFLIP)
+	{
+		for (int i = 0; i < NFLIP; i++)
+		{
+			if (flipPruneTable[i] == depth)
+			{
+				for (int j = 0; j < NMove; j++)
+				{
+					index = flipMoveTable[i][j];
+					if (flipPruneTable[index] == -1)
+					{
+						flipPruneTable[index] = depth + 1;
+						done++;
+					}
+				}
+			}
+		}
+		depth++;
+	}
+	return;
+}
+
+void InitSlicePruneTable() // 棱块位置组合的剪枝表
+{
+	for (int i = 0; i < NSLICE; i++)
+		slicePruneTable[i] = -1;
+	int depth = 0;
+	int done = 1;
+	int index;
+	slicePruneTable[0] = 0;
+	while (done < NSLICE)
+	{
+		for (int i = 0; i < NSLICE; i++)
+		{
+			if (slicePruneTable[i] == depth)
+			{
+				for (int j = 0; j < NMove; j++)
+				{
+					index = sliceMoveTable[i][j];
+					if (slicePruneTable[index] == -1)
+					{
+						slicePruneTable[index] = depth + 1;
+						done++;
+					}
+				}
+			}
+		}
+		depth++;
+	}
+	return;
+}
+
+// 阶段二允许的魔方操作
+CubeOperate operationForStep2[10] = { {U,0},{U,1},{U,2},{D,0},{D,1},{D,2},{L,1},{R,1},{F,1},{B,1} };
+
+void InitCpPruneTable() // 角块位置剪枝表
+{
+	for (int i = 0; i < NCP; i++)
+		cpPruneTable[i] = -1;
+	int depth = 0;
+	int done = 1;
+	int index;
+	cpPruneTable[0] = 0;
+	while (done < NCP)
+	{
+		for (int i = 0; i < NCP; i++)
+		{
+			if (cpPruneTable[i] == depth)
+			{
+				for (int j = 0; j < 10; j++)
+				{
+					int x = operationForStep2[j].a;
+					int y = operationFOrStep2[j].b;
+					index = cpMoveTable[i][x * 3 + y];
+					if (cpPruneTable[index] == -1)
+					{
+						cpPruneTable[index] = depth + 1;
+						done++;
+					}
+				}
+			}
+		}
+		depth++;
+	}
+	return;
+}
+
+void InitEpudPruneTable() // 上下层棱块位置剪枝表
+{
+	for (int i = 0; i < NEP_UD; i++)
+		epudPruneTable[i] = -1;
+	int depth = 0;
+	int done = 1;
+	int index;
+	epudPruneTable[0] = 0;
+	while (done < NEP_UD)
+	{
+		for (int i = 0; i < NEP_UD; i++)
+		{
+			if (epudPruneTable[i] == depth)
+			{
+				for (int j = 0; j < 10; j++)
+				{
+					int x = operationForStep2[j].a;
+					int y = operationFOrStep2[j].b;
+					index = epudMoveTable[i][x * 3 + y];
+					if (epudPruneTable[index] == -1)
+					{
+						epudPruneTable[index] = depth + 1;
+						done++;
+					}
+				}
+			}
+		}
+		depth++;
+	}
+	return;
+}
+
+void InitEpmPruneTable() // 中间层棱块位置剪枝表
+{
+	for (int i = 0; i < NEP_M; i++)
+		epmPruneTable[i] = -1;
+	int depth = 0;
+	int done = 1;
+	int index;
+	epmPruneTable[0] = 0;
+	while (done < NEP_M)
+	{
+		for (int i = 0; i < NEP_M; i++)
+		{
+			if (epmPruneTable[i] == depth)
+			{
+				for (int j = 0; j < 10; j++)
+				{
+					int x = operationForStep2[j].a;
+					int y = operationFOrStep2[j].b;
+					index = epmMoveTable[i][x * 3 + y];
+					if (epmPruneTable[index] == -1)
+					{
+						epmPruneTable[index] = depth + 1;
+						done++;
+					}
+				}
+			}
+		}
+		depth++;
 	}
 	return;
 }

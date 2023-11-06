@@ -51,21 +51,6 @@ typedef enum
     y,
     b
 } Color;
-typedef enum
-{
-    MoveR,
-    Move_R,
-    MoveR2,
-    MoveF,
-    Move_F,
-    MoveF2,
-    MoveRR,
-    Move_RR,
-    MoveRR2,
-    MoveFF,
-    Move_FF,
-    MoveFF2
-} Movement;
 
 struct corner // 角块
 {
@@ -120,12 +105,18 @@ struct CubieCube_with_color
 
 };
 
+struct CubeOperate // 魔方操作
+{
+    Direction a; // 操作的面 
+    int b; // 操作方向，顺时针90°、逆时针90°、180°
+};
+
 class CubeGenerate
 { // 表示魔方产生的一个类
 
 private:
     CubieCube Init;
-    CubieCube Move[6];
+    CubieCube move[6];
     string disrupt_string; // 打乱公式
 public:
     CubieCube cube_state;
