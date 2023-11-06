@@ -1,13 +1,3 @@
-/**
- * @file CubeGenerate.cpp
- * @author Lou Bin ({3189529472@qq.com})
- * @brief
- * @version 0.1
- * @date 2023-10-06
- *
- * @copyright Copyright (c) 2023
- *
- */
 
 #include "CubeGenerate.h"
 using namespace std;
@@ -155,6 +145,7 @@ void CubeGenerate::EncodeEdge(void)
 		}
 	}
 	cube_state.index_combination = index_c;
+	
 	//所有棱块编码
 	for (int i = BR; i > UR; i--)
 	{
@@ -169,6 +160,7 @@ void CubeGenerate::EncodeEdge(void)
 		index_p = (index_p + s) * i;
 	}
 	cube_state.index_edge_p = index_p; // 康托展开
+
 	//上下层编码
 	index_p=0;
 	for (int i = DB; i > UR; i--) 
@@ -184,6 +176,7 @@ void CubeGenerate::EncodeEdge(void)
 		 index_p= (index_p + s) * i;
 	}
 	cube_state.index_other_p = index_p; // 康托展开
+
 	//中间层编码
 	index_p=0;
 	for (int i = BR; i > FR; i--) 
