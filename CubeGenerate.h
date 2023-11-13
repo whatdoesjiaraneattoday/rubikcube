@@ -139,4 +139,11 @@ void InitSliceMoveTable(); // 初始化中间层棱块位置转动表
 void InitTwistMoveTable(); // 初始化角块方向转动表
 void initFlipMoveTable(); // 初始化棱块方向转动表
 
+void InitTwistPruneTable(); // 角块方向的剪枝表
+void InitFlipPruneTable(); // 棱块方向的剪枝表
+void InitSlicePruneTable(); // 棱块位置组合的剪枝表
+void InitCpPruneTable(); // 角块位置剪枝表
+void InitEpudPruneTable(); // 上下层棱块位置剪枝表
+void InitEpmPruneTable(); // 中间层棱块位置剪枝表
+
 #endif

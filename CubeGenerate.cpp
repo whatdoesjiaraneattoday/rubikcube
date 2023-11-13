@@ -529,7 +529,7 @@ void InitTwistPruneTable() // 角块方向的剪枝表
 			{
 				for (int j = 0; j < NMove; j++)
 				{
-					index = twistMovwTable[i][j]; // 执行18种转动操作
+					index = twistMoveTable[i][j]; // 执行18种转动操作
 					if (twistPruneTable[index] == -1) // 若该状态的剪枝表没有填写
 					{
 						twistPruneTable[index] = depth + 1; // 填写深度值
@@ -623,7 +623,7 @@ void InitCpPruneTable() // 角块位置剪枝表
 				for (int j = 0; j < 10; j++)
 				{
 					int x = operationForStep2[j].a;
-					int y = operationFOrStep2[j].b;
+					int y = operationForStep2[j].b;
 					index = cpMoveTable[i][x * 3 + y];
 					if (cpPruneTable[index] == -1)
 					{
@@ -655,7 +655,7 @@ void InitEpudPruneTable() // 上下层棱块位置剪枝表
 				for (int j = 0; j < 10; j++)
 				{
 					int x = operationForStep2[j].a;
-					int y = operationFOrStep2[j].b;
+					int y = operationForStep2[j].b;
 					index = epudMoveTable[i][x * 3 + y];
 					if (epudPruneTable[index] == -1)
 					{
@@ -687,7 +687,7 @@ void InitEpmPruneTable() // 中间层棱块位置剪枝表
 				for (int j = 0; j < 10; j++)
 				{
 					int x = operationForStep2[j].a;
-					int y = operationFOrStep2[j].b;
+					int y = operationForStep2[j].b;
 					index = epmMoveTable[i][x * 3 + y];
 					if (epmPruneTable[index] == -1)
 					{
