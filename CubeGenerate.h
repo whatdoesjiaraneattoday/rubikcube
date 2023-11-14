@@ -135,7 +135,7 @@ long long n_C_m(int n, int m);
 void InitCpMoveTable(); // 初始化角块位置转动表
 void InitEpudMoveTable(); // 初始化上下层棱块位置转动表
 void InitEpmMoveTable(); // 初始化中间层棱块位置转动表
-void InitSliceMoveTable(); // 初始化中间层棱块位置转动表
+void InitSliceMoveTable(); // 初始化棱块位置组合转动表
 void InitTwistMoveTable(); // 初始化角块方向转动表
 void initFlipMoveTable(); // 初始化棱块方向转动表
 

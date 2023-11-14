@@ -375,14 +375,14 @@ const int NMove = 18; // 可进行的操作数量，6个面，每个面可执行
 const int NCP = 40320; // 角块位置排列的状态数量 8A8=40320
 const int NEP_UD = 40320; // 上下层棱块在上下层位置排列的状态数量 8A8=40320
 const int NEP_M = 24; // 中间层棱块在中间层位置排列的状态数 4A4=24
-const int NSLICE = 495; // 所有棱块在中间层位置排列的状态数 12C4=495
+const int NSLICE = 495; // 所有棱块在中间层位置组合的状态数 12C4=495
 const int NTWIST = 2187; // 角块的方向状态数 3^7=2187
 const int NFLIP = 2048; // 棱块的方向状态数 2^11=2048
 
 int cpMoveTable[NCP][NMove]; // 存储角块位置转动表，索引第一项为初始状态，第二项为执行的操作
 int epudMoveTable[NEP_UD][NMove]; // 存储上下层棱块位置转动表
 int epmMoveTable[NEP_M][NMove]; // 存储中间层棱块位置转动表
-int sliceMoveTable[NSLICE][NMove]; // 存储中间层棱块位置转动表
+int sliceMoveTable[NSLICE][NMove]; // 存储棱块位置组合转动表
 int twistMoveTable[NTWIST][NMove]; // 存储角块方向转动表
 int flipMoveTable[NFLIP][NMove]; // 存储棱块方向转动表
 
@@ -449,7 +449,7 @@ void InitEpmMoveTable() // 初始化中间层棱块位置转动表
 	return;
 }
 
-void InitSliceMoveTable() // 初始化中间层棱块位置转动表
+void InitSliceMoveTable() // 初始化棱块位置组合转动表
 {
 	CubeGenerate a;
 	for (int i = 0; i < NSLICE; i++)
