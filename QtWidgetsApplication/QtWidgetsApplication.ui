@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0">
+<UI version="4.0" >
  <class>QtWidgetsApplicationClass</class>
- <widget class="QMainWindow" name="QtWidgetsApplicationClass">
-  <property name="geometry">
+ <widget class="QMainWindow" name="QtWidgetsApplicationClass" >
+  <property name="objectName" >
+   <string notr="true">QtWidgetsApplicationClass</string>
+  </property>
+  <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
@@ -10,7 +12,7 @@
     <height>400</height>
    </rect>
   </property>
-  <property name="windowTitle">
+  <property name="windowTitle" >
    <string>QtWidgetsApplication</string>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -116,9 +118,10 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
+ <layoutDefault spacing="6" margin="11" />
+ <pixmapfunction></pixmapfunction>
  <resources>
-  <include location="QtWidgetsApplication.qrc"/>
+   <include location="QtWidgetsApplication.qrc"/>
  </resources>
  <connections/>
-</ui>
+</UI>

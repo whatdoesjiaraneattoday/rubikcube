@@ -1024,7 +1024,7 @@ void search2(int CP, int EP1, int EP2, int cnt, int togo2)//阶段二的搜索
  
 void search1(int twist, int flip, int slice, int togo1)//阶段一的搜索 
 {
-	if (togo1 == 0)
+	if (togo1 == 0) // 如果阶段一已解决
 	{
 		if (twist == 0 && flip == 0 && slice == 0)
 		{
