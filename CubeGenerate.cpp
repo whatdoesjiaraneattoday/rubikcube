@@ -28,9 +28,6 @@ long long n_C_m(int n, int m)
 	}
 }
 
-CubeGenerate::CubeGenerate()
-{
-}
 
 void CubeGenerate::EncodeCorner(void)
 {
@@ -335,7 +332,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 
 }
 
-void CubeGenerate::CornerTransform(const CubieCube* transform) // 角块变换 
+void CubeGenerate::CornerTransform( CubieCube* transform) // 角块变换 
 {
 	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
 	{
@@ -355,14 +352,21 @@ void CubeGenerate::EdgeTransform(const CubieCube* transform) // 棱块变换
 	return;
 }
 
-CubieCube movement[6]; // 六种基本操作变换
+ CubieCube movement[6]; // 六种基本操作变换
 
 void CubeGenerate::CubeMove(int m) // 魔方转动
+
 {
 	CornerTransform(&movement[m]);
 	EdgeTransform(&movement[m]);
 	return;
 }
+void CubeGenerate::getCube()
+{
+
+}
+
+
 
 const int NMove = 18; // 可进行的操作数量，6个面，每个面可执行3个方向(90° -90° 180°)操作
 const int NCP = 40320; // 角块位置排列的状态数量 8A8=40320

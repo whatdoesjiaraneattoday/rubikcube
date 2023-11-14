@@ -120,14 +120,35 @@ private:
     string disrupt_string; // 打乱公式
 public:
     CubieCube cube_state;
-    CubeGenerate();                          // 初始化
+    CubeGenerate()                        // 初始化
+    {
+        for(int i=0;i<=7;i++)
+        {
+            cube_state.co[i].c=Corner(i);
+            cube_state.co[i].o=0;
+        }
+        for(int i=0;i<=11;i++)
+        {
+            cube_state.eo[i].e=Edge(i);
+            cube_state.eo[i].o=0;
+        }
+        cube_state.index_combination=0;
+        cube_state.index_corner_o=0;
+        cube_state.index_corner_p=0;
+        cube_state.index_edge_o=0;
+        cube_state.index_edge_p=0;
+        cube_state.index_middle_p=0;
+        cube_state.index_other_p=0;
+    }
+
     void EncodeCorner(void); // encoding
     void DecodeCorner(void); // decoding
     void EncodeEdge(void);
     void DecodeEdge(int num);
-    void CornerTransform(const CubieCube* transform); // 角块变换
+    void CornerTransform( CubieCube* transform); // 角块变换
     void EdgeTransform(const CubieCube* transform); // 棱块变换
     void CubeMove(int m);
+    void getCube();
 };
 // 求组合数 n是下标，m是上标
 long long n_C_m(int n, int m);

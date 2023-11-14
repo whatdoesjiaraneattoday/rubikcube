@@ -701,6 +701,10 @@ int tranint(char x)
 	if (x == 'g') return 3;
 	if (x == 'r') return 4;
 	if (x == 'o') return 5;
+	{
+		return -1;
+	}
+
 }
  
 int jiaokuai(int x, int y, int z)//角块的识别 
@@ -730,6 +734,8 @@ int jiaokuai(int x, int y, int z)//角块的识别
 	a = 1; b = 3; c = 5; 
 	if ((x == a && y == b && z == c) || (x == a && z == b && y == c) || (y == a && x == b && z == c) || (y == a && z == b && x == c) || (z == a && x == b && y == c) || (z == a && y == b && x == c))
 		return 7;
+
+	return -1;
 }
  
 int lengkuai(int x, int y)
@@ -771,6 +777,7 @@ int lengkuai(int x, int y)
 	a = 5; b = 3;
 	if ((x == a && y == b) || (x == b && y == a)) 
 		return 11;
+	return -1;
 }
  
 int zhongji(int kuai, int wei, int c0, int c1)
@@ -795,6 +802,7 @@ int zhongji(int kuai, int wei, int c0, int c1)
 		if (c0 >= 2 && c0 <= 3) return 0;
 		if (c1 >= 2 && c1 <= 3) return 1;
 	}
+	return -1;
 }
  
 Cube getcube1()//通过色相获取魔方初始状态
