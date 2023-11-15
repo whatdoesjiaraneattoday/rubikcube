@@ -339,7 +339,7 @@ void CubeGenerate::DecodeEdge(int select_num)// n=0 方向 n=1 全位置解码 n
 
 }
 
-void CubeGenerate::CornerTransform( CubieCube* transform) // 角块变换 
+void CubeGenerate::CornerTransform(const CubieCube* transform) // 角块变换 
 {
 	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
 	{
@@ -368,9 +368,58 @@ void CubeGenerate::CubeMove(int m) // 魔方转动
 	EdgeTransform(&movement[m]);
 	return;
 }
-void CubeGenerate::getCube()
+void CubeGenerate::getCube(void)
 {
-
+	string input;
+	getline(cin,input);
+	getline(cin,input);
+	input=input+" ";
+	disrupt_string=input;
+	int len=input.length();
+	int pos_b=-1;//后面的位置
+	int pos_f=0;//前面的位置
+	for(int i=0;i<=len-1;i++)
+	{
+		if(input.at(i)==' ')
+		{
+			pos_f=i;
+			int len=pos_f-pos_b-1;
+			string x=input.substr(pos_b+1,len);
+			pos_b=pos_f;
+			int ci=0;
+			if(x.length()==1)
+			{
+				ci=1;
+			}
+			else if(x.substr(1)=="'")
+			{
+				ci=3;
+			}
+			else if(x.at(1)== '2')
+			{
+				ci=2;
+			}
+			int op=0;
+			char tmp=x.at(0);
+			switch(tmp)
+			{	
+			case 'U':op = 0; 
+				break;
+			case 'D':op = 1; 
+				break;//U1 U1 D1 D D L1
+			case 'L':op = 2; 
+				break;
+			case 'R':op = 3; 
+				break;
+			case 'F':op = 4;
+				break;
+			case 'B':op = 5; 
+				break;
+			for (int i = 1; i <= ci; i++)
+				CubeMove(op);
+			}
+		}
+	}
 }
 
 
@@ -395,15 +444,15 @@ void InitCpMoveTable() // 初始化角块位置转动表
 	CubeGenerate a;
 	for (int i = 0; i < NCP; i++)
 	{
-		a.cube_state.index_corner_o = i;
+		a.cube_state.index_corner_p = i;
 		a.DecodeCorner();
-		for (int j = U; i <= B; j++)
+		for (int j = U; j <= B; j++)
 		{
 			for (int k = 0; k < 3; k++)
 			{
 				a.CornerTransform(&movement[j]);
 				a.EncodeCorner();
-				cpMoveTable[i][j * 3 + k] = a.cube_state.index_corner_o;
+				cpMoveTable[i][j * 3 + k] = a.cube_state.index_corner_p;
 			}
 			a.CornerTransform(&movement[j]);
 		}
@@ -418,7 +467,7 @@ void InitEpudMoveTable() // 初始化上下层棱块位置转动表
 	{
 		a.cube_state.index_other_p = i;
 		a.DecodeEdge(2);
-		for (int j = U; i <= B; j++)
+		for (int j = U; j <= B; j++)
 		{
 			for (int k = 0; k < 3; k++)
 			{
@@ -527,7 +576,8 @@ int slicePruneTable[NSLICE];
 void InitTwistPruneTable() // 角块方向的剪枝表
 {
 	for (int i = 0; i < NTWIST; i++)
-		twistPruneTable[i] = -1; // 初始化表值为-1
+	{	twistPruneTable[i] = -1; // 初始化表值为-1
+	}
 	int depth = 0;
 	int done = 1;
 	int index;
@@ -536,6 +586,8 @@ void InitTwistPruneTable() // 角块方向的剪枝表
 	{
 		for (int i = 0; i < NTWIST; i++)
 		{
+			cout<<i<< endl;
+
 			if (twistPruneTable[i] == depth) // 找到该深度下的状态
 			{
 				for (int j = 0; j < NMove; j++)

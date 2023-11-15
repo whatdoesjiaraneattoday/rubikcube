@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -145,10 +146,10 @@ public:
     void DecodeCorner(void); // decoding
     void EncodeEdge(void);
     void DecodeEdge(int num);
-    void CornerTransform( CubieCube* transform); // 角块变换
+    void CornerTransform(const CubieCube* transform); // 角块变换
     void EdgeTransform(const CubieCube* transform); // 棱块变换
     void CubeMove(int m);
-    void getCube();
+    void getCube(void);
 };
 // 求组合数 n是下标，m是上标
 long long n_C_m(int n, int m);
