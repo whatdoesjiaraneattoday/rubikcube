@@ -72,14 +72,41 @@ int main()
 	InitSliceMoveTable();
 	InitTwistMoveTable();
 	initFlipMoveTable();
-	InitTwistPruneTable();
-	InitFlipPruneTable();
+
+  	InitTwistPruneTable();
+ 	InitFlipPruneTable();
 	InitSlicePruneTable();
 	InitCpPruneTable();
 	InitEpudPruneTable();
-	InitEpmPruneTable(); 
-	
+	InitEpmPruneTable();   
+
 	cout << "欢迎来到简化版kociemba algorithm解魔方程序" << endl;
 	cout << "请输入标准打乱公式" << endl;
-	Cube.getCube();
+	//Cube.GetCube();
+	//
+	/*
+	Cube.DecodeCorner();
+	Cube.DecodeEdge();
+	Cube.EncodeCorner();
+	Cube.EncodeEdge();
+	*/
+
+/* 	int i;
+	Cube.cube_state.index_edge_o=3;
+	Cube.cube_state.index_other_p=4000;
+	Cube.cube_state.index_middle_p=10;
+	Cube.cube_state.index_combination=100;
+	Cube.DecodeEdge(4);
+	Cube.ShowState(3);
+ */
+/*
+	string debug;
+	getline(cin,debug);
+	for(int i=0;i<=11;i++)
+	{
+		Cube.cube_state.eo[i].e=(Edge)((int)debug[i]-int('0'));
+	}
+	Cube.EncodeEdge();
+	Cube.ShowState(4);
+*/
 }

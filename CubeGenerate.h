@@ -149,7 +149,8 @@ public:
     void CornerTransform(const CubieCube* transform); // 角块变换
     void EdgeTransform(const CubieCube* transform); // 棱块变换
     void CubeMove(int m);
-    void getCube(void);
+    void GetCube(void);
+    void ShowState(int n=0);// i=0 show o i=1 show c  i=2 show o i=3 show e
 };
 // 求组合数 n是下标，m是上标
 long long n_C_m(int n, int m);
