@@ -333,9 +333,9 @@ void CubeGenerate::DecodeEdge(int select_num) // n=0 方向 n=1 全位置解码 
 
 void CubeGenerate::CornerTransform(const CubieCube *transform) // 角块变换
 {
+	CubieCube temp = cube_state;
 	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
 	{
-		CubieCube temp = cube_state;
 		cube_state.co[i].c = temp.co[transform->co[i].c].c;
 		cube_state.co[i].o = (temp.co[transform->co[i].c].o + transform->co[i].o) % 3;
 	}
@@ -344,10 +344,11 @@ void CubeGenerate::CornerTransform(const CubieCube *transform) // 角块变换
 
 void CubeGenerate::EdgeTransform(const CubieCube *transform) // 棱块变换
 {
+	CubieCube temp = cube_state;
 	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
 	{
-		cube_state.eo[i].e = cube_state.eo[transform->eo[i].e].e;
-		cube_state.eo[i].o = (cube_state.eo[transform->eo[i].e].o + transform->eo[i].o) % 2;
+		cube_state.eo[i].e = temp.eo[transform->eo[i].e].e;
+		cube_state.eo[i].o = (temp.eo[transform->eo[i].e].o + transform->eo[i].o) % 2;
 	}
 	return;
 }
@@ -807,3 +808,5 @@ void InitEpmPruneTable() // 中间层棱块位置剪枝表
 	}
 	return;
 }
+
+void DFSearch2(int )

@@ -1063,16 +1063,16 @@ void search1(int twist, int flip, int slice, int togo1)//阶段一的搜索
 				continue;
 			if (x / 3 - i / 3 == 1 && (x / 3) % 2 == 1) 
 				continue;
-			twist1 = twistMoveTable[twist][i];
-			flip1 = flipMoveTable[flip][i];
-			slice1 = sliceMoveTable[slice][i];
-			int dist1 = max(max(PruneTable1[twist1], PruneTable2[flip1]), PruneTable3[slice1]);
-			if (dist1 > togo1 - 1)
+			twist1 = twistMoveTable[twist][i]; // 转动过后新的twist
+			flip1 = flipMoveTable[flip][i]; // 转动过后新的flip
+			slice1 = sliceMoveTable[slice][i]; // 转动过后新的slice
+			int dist1 = max(max(PruneTable1[twist1], PruneTable2[flip1]), PruneTable3[slice1]); // 求到目标状态至少要多少步
+			if (dist1 > togo1 - 1) // 若步数大于最大深度，剪枝
 				continue;
 			ans.len++;
-			ans.xulie[ans.len] = i;
-			search1(twist1, flip1, slice1, togo1 - 1);
-			ans.len--;
+			ans.xulie[ans.len] = i; // 储存操作到答案序列
+			search1(twist1, flip1, slice1, togo1 - 1); // 进入下一层
+			ans.len--; // 回溯
 		}
 	}
 	return;
