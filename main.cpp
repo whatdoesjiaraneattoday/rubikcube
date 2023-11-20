@@ -11,9 +11,7 @@ int main()
 				   0,
 				   0,
 				   0,
-				   0
-
-	};
+				   0};
 	movement[D] = {// URF槽的元素被UFL槽的元素替代，且顺时针扭转，方向加1
 				   {{URF, 0}, {UFL, 0}, {ULB, 0}, {UBR, 0}, {DLF, 0}, {DBL, 0}, {DRB, 0}, {DFR, 0}},
 				   {{UR, 0}, {UF, 0}, {UL, 0}, {UB, 0}, {DF, 0}, {DL, 0}, {DB, 0}, {DR, 0}, {FR, 0}, {FL, 0}, {BL, 0}, {BR, 0}},
@@ -65,7 +63,7 @@ int main()
 				   0,
 				   0};
 	CubeGenerate Cube;
-	
+
 	InitCpMoveTable();
 	InitEpudMoveTable();
 	InitEpmMoveTable();
@@ -73,40 +71,20 @@ int main()
 	InitTwistMoveTable();
 	initFlipMoveTable();
 
-  	InitTwistPruneTable();
- 	InitFlipPruneTable();
+	InitTwistPruneTable();
+	InitFlipPruneTable();
 	InitSlicePruneTable();
 	InitCpPruneTable();
 	InitEpudPruneTable();
-	InitEpmPruneTable();   
+	InitEpmPruneTable();
 
 	cout << "欢迎来到简化版kociemba algorithm解魔方程序" << endl;
 	cout << "请输入标准打乱公式" << endl;
-	//Cube.GetCube();
-	//
-	/*
-	Cube.DecodeCorner();
-	Cube.DecodeEdge();
+	Cube.GetCube();
 	Cube.EncodeCorner();
 	Cube.EncodeEdge();
-	*/
+	Solution Solution;
+	Solution.len=0;
+	Solution.operate_sequence[0] = 7890;
 
-/* 	int i;
-	Cube.cube_state.index_edge_o=3;
-	Cube.cube_state.index_other_p=4000;
-	Cube.cube_state.index_middle_p=10;
-	Cube.cube_state.index_combination=100;
-	Cube.DecodeEdge(4);
-	Cube.ShowState(3);
- */
-/*
-	string debug;
-	getline(cin,debug);
-	for(int i=0;i<=11;i++)
-	{
-		Cube.cube_state.eo[i].e=(Edge)((int)debug[i]-int('0'));
-	}
-	Cube.EncodeEdge();
-	Cube.ShowState(4);
-*/
 }

@@ -352,7 +352,15 @@ void CubeGenerate::EdgeTransform(const CubieCube *transform) // 棱块变换
 	}
 	return;
 }
-
+void CubeGenerate::EdgeTransform1(const CubieCube *transform) // 棱块变换
+{
+	CubieCube temp = cube_state;
+	for (Edge i = UR; i <= BR; i = Edge(int(i) + 1))
+	{
+		cube_state.eo[i].e = temp.eo[transform->eo[i].e].e;
+	}
+	return;
+}
 CubieCube movement[6]; // 六种基本操作变换
 
 void CubeGenerate::CubeMove(int m) // 魔方转动
@@ -414,9 +422,9 @@ void CubeGenerate::GetCube(void)
 			case 'B':
 				op = 5;
 				break;
-				for (int i = 1; i <= ci; i++)
-					CubeMove(op);
 			}
+			for (int i = 1; i <= ci; i++)
+				CubeMove(op);
 		}
 	}
 }
@@ -579,9 +587,11 @@ void InitTwistMoveTable() // 初始化角块方向转动表
 			{
 				a.CornerTransform(&movement[j]);
 				a.EncodeCorner();
+
 				twistMoveTable[i][j * 3 + k] = a.cube_state.index_corner_o;
 			}
 			a.CornerTransform(&movement[j]);
+
 		}
 	}
 	return;
@@ -810,3 +820,58 @@ void InitEpmPruneTable() // 中间层棱块位置剪枝表
 }
 
 void DFSearch2(int )
+}
+
+void DFSearch1(CubeGenerate Cube,int twist, int flip,int slice, int togo1)
+{
+	extern Solution Solution;
+	if(togo1==0)
+	{
+		if(twist==0&&flip==0&&slice==0)
+		{
+			int index_corner_p =Cube.cube_state.index_corner_p;
+			for (int i = 1; i <= Solution.len; i++)
+			{
+				index_corner_p = cpMoveTable[index_corner_p][Solution.operate_sequence[i]];
+				for (int j = 0; j <= Solution.operate_sequence[i] % 3; j++)
+				{
+					Cube.EdgeTransform(&movement[Solution.operate_sequence[i] / 3]); 
+				}
+			}
+			Cube.EncodeEdge();
+			//cout<<x<<" "<<y<<" "<<z<<endl;
+			int m = max(max(PruneTable4[x], PruneTable5[y]), PruneTable6[z]);
+			for (int i = m; i <= minn - ans.len; i++)
+			{
+				if (flag) 
+					break;
+				if (pan[i + ans.len] <= 0) 
+					continue;
+				search2(x, y, z, i + ans.len, i);
+			}
+			flag = 0;
+		}
+	}
+	else
+	{
+		int flip1,twist1,slice1;
+		for(int i=0;i<=17;i++)
+		{
+			twist1 = twistMoveTable[twist][i];
+			flip1 = flipMoveTable[flip][i];
+			slice1 = sliceMoveTable[slice][i];
+			int dist1 = max(max(twistPruneTable[twist1], flipPruneTable[flip1]), slicePruneTable[slice1]);
+			if (dist1 > togo1 - 1)
+				continue;
+			Solution.len++;
+			Solution.operate_sequence[Solution.len] = i;
+			DFSearch1(Cube,twist1, flip1, slice1, togo1 - 1);
+			Solution.len--;
+		}
+
+	}
+}
+void DFSearch2(int EP1,int EP2,int cnt,int togo2)
+{
+
+}
