@@ -335,8 +335,9 @@ void CubeGenerate::CornerTransform(const CubieCube *transform) // 角块变换
 {
 	for (Corner i = URF; i <= DRB; i = Corner(int(i) + 1))
 	{
-		cube_state.co[i].c = cube_state.co[transform->co[i].c].c;
-		cube_state.co[i].o = (cube_state.co[transform->co[i].c].o + transform->co[i].o) % 3;
+		CubieCube temp = cube_state;
+		cube_state.co[i].c = temp.co[transform->co[i].c].c;
+		cube_state.co[i].o = (temp.co[transform->co[i].c].o + transform->co[i].o) % 3;
 	}
 	return;
 }
