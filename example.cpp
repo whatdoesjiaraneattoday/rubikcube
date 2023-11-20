@@ -462,9 +462,10 @@ void initTwistMoveTable()//初始化角块方向转动表 阶段1
 			{
 				cornerMultiply(&a, &Move[j], &b);
 				a = b;
+
 				twistMoveTable[i][j * 3 + k] = idcornero(b);
 			}
-			cornerMultiply(&a, &Move[j], &b); a = b; //cout<<idcornero(b)<<endl;
+			cornerMultiply(&a, &Move[j], &b); a = b; 
 		}
 	}
 	return;
@@ -1171,8 +1172,7 @@ int main()
 	if(n==3)
 	{
 		cout<<"调试";
-
-		initc = slicecube(100);
+		initc = getcube2();
 		cout << "Cube State" << endl;
 		for (int i = 0; i <= 11; i++)
 		{
