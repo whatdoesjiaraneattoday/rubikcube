@@ -1127,7 +1127,8 @@ int main()
 	cout << "方式一:输入魔方六个面的颜色" << endl;
 	cout << "方式二:输入标准打乱公式" << endl;
 	cout << "选择方式一请输入 1，选择方式二请输入 2" << endl;
-	cin >> n;
+	//cin >> n;
+	n = 3;
 	if (n == 1)
 	{
 		cout << "请输入魔方六个面的色块颜色，标准魔方配色（黄，白，蓝，绿，红，橙）分别用 y,w,b,g,r,o 表示" << endl;
@@ -1166,6 +1167,23 @@ int main()
 		{
 			search1(twist, flip, slice, i);
 		}
+	}
+	if(n==3)
+	{
+		cout<<"调试";
+
+		initc = slicecube(100);
+		cout << "Cube State" << endl;
+		for (int i = 0; i <= 11; i++)
+		{
+			cout << "eo[" << i << "]e:" << initc.eo[i].e << endl;
+		}
+
+		
+
+
+
+
 	}
 	return 0;
 }
