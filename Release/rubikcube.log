@@ -1,0 +1,18 @@
+﻿  CubeExplorer.cpp
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeExplorer.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeExplorer.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  CubeGenerate.cpp
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeGenerate.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeGenerate.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeGenerate.cpp(150,20): warning C4244: “+=”: 从“__int64”转换到“int”，可能丢失数据
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeGenerate.cpp(333,17): warning C4244: “-=”: 从“__int64”转换到“int”，可能丢失数据
+  main.cpp
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeGenerate.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  test.cpp
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\test.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\CubeGenerate.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  正在生成代码...
+LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/OPT:ICF”规范)
+test.obj : error LNK2005: _main 已经在 main.obj 中定义
+MSVCRT.lib(exe_winmain.obj) : error LNK2019: 无法解析的外部符号 _WinMain@16，函数 "int __cdecl __scrt_common_main_seh(void)" (?__scrt_common_main_seh@@YAHXZ) 中引用了该符号
+C:\Users\34247\source\repos\whatdoesjiaraneattoday\rubikcube\Release\rubikcube.exe : fatal error LNK1120: 1 个无法解析的外部命令
