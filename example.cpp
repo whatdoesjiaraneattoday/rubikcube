@@ -1121,15 +1121,14 @@ int main()
 	initPruneTable5();
 	initPruneTable6();
 	for (int i = 0; i <= 999; i++) 
-		pan[i] = 3;
+		pan[i] = 1;
 	int n;
 	cout << "欢迎来到简化版kociemba algorithm解魔方程序" << endl;
 	cout << "请选择表述魔方的初始状态的方式" << endl;
 	cout << "方式一:输入魔方六个面的颜色" << endl;
 	cout << "方式二:输入标准打乱公式" << endl;
 	cout << "选择方式一请输入 1，选择方式二请输入 2" << endl;
-	//cin >> n;
-	n = 3;
+	cin >> n;
 	if (n == 1)
 	{
 		cout << "请输入魔方六个面的色块颜色，标准魔方配色（黄，白，蓝，绿，红，橙）分别用 y,w,b,g,r,o 表示" << endl;
