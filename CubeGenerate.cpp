@@ -819,33 +819,33 @@ void InitEpmPruneTable() // 中间层棱块位置剪枝表
 	return;
 }
 
-void DFSearch2(int )
-}
-
-void DFSearch1(CubeGenerate Cube,int twist, int flip,int slice, int togo1)
+void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 {
 	extern Solution Solution;
+	extern int depthLimit;
 	if(togo1==0)
 	{
 		if(twist==0&&flip==0&&slice==0)
 		{
-			int index_corner_p =Cube.cube_state.index_corner_p;
+			int index_corner_p = Cube.cube_state.index_corner_p;
 			for (int i = 1; i <= Solution.len; i++)
 			{
 				index_corner_p = cpMoveTable[index_corner_p][Solution.operate_sequence[i]];
 				for (int j = 0; j <= Solution.operate_sequence[i] % 3; j++)
 				{
-					Cube.EdgeTransform(&movement[Solution.operate_sequence[i] / 3]); 
+					Cube.EdgeTransform1(&movement[Solution.operate_sequence[i] / 3]); 
 				}
 			}
 			Cube.EncodeEdge();
+			int index_other_p = Cube.cube_state.index_other_p;
+			int index_middle_p = Cube.cube_state.index_middle_p;
 			//cout<<x<<" "<<y<<" "<<z<<endl;
-			int m = max(max(PruneTable4[x], PruneTable5[y]), PruneTable6[z]);
-			for (int i = m; i <= minn - ans.len; i++)
+			int m = max(max(cpPruneTable[index_corner_p], epudPruneTable[index_other_p]), epmPruneTable[index_middle_p]);
+			for (int i = m; i <= depthLimit - Solution.len; i++)
 			{
 				if (flag) 
 					break;
-				if (pan[i + ans.len] <= 0) 
+				if (pan[i + Solution.len] <= 0) 
 					continue;
 				search2(x, y, z, i + ans.len, i);
 			}
@@ -871,7 +871,52 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip,int slice, int togo1)
 
 	}
 }
+
 void DFSearch2(int EP1,int EP2,int cnt,int togo2)
 {
-
+	if (flag)
+		return;
+	if (togo2 == 0)
+	{
+		if (CP == 0 && EP1 == 0 && EP2 == 0)
+		{
+			xu++;
+			cout << xu << ":" << ans.len << " ";
+			for (int i = 1; i <= ans.len; i++)
+				cout << trans[ans.xulie[i]] << " ";
+			cout << endl;
+			minn = ans.len;
+			flag = 1;
+			pan[cnt]--;
+		}
+		return;
+	}
+	else
+	{
+		int cp, ep1, ep2;
+		for (int i = 0; i <= 9; i++)
+		{
+			if (flag)
+				return;
+			int x = cz[i].a;
+			int y = cz[i].b;
+			int j = 3 * x + y;
+			int m = ans.xulie[ans.len];
+			if (m / 3 == x)
+				continue;
+			if (m / 3 - x == 1 && (m / 3) % 2 == 1)
+				continue;
+			cp = cpMoveTable[CP][j];
+			ep1 = epMoveTable1[EP1][j];
+			ep2 = epMoveTable2[EP2][j];
+			int dist2 = max(max(PruneTable4[cp], PruneTable5[ep1]), PruneTable6[ep2]);
+			if (dist2 > togo2 - 1)
+				continue;
+			ans.len++;
+			ans.xulie[ans.len] = x * 3 + y;
+			search2(cp, ep1, ep2, cnt, togo2 - 1);
+			ans.len--;
+		}
+	}
+	return;
 }

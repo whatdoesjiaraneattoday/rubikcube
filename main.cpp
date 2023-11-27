@@ -86,5 +86,6 @@ int main()
 	Solution Solution;
 	Solution.len=0;
 	Solution.operate_sequence[0] = 7890;
+	int depthLimit = 25; // 搜索深度
 
 }
