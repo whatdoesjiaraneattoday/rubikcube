@@ -847,7 +847,7 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 					break;
 				if (pan[i + Solution.len] <= 0) 
 					continue;
-				search2(x, y, z, i + ans.len, i);
+				search2(index_corner_p, index_other_p, index_middle_p, i + Solution.len, i);
 			}
 			flag = 0;
 		}
