@@ -823,9 +823,10 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 {
 	extern Solution Solution;
 	extern int depthLimit;
-	if(togo1==0)
+	extern int flag;
+	if(togo1==0) // 若阶段一已解决
 	{
-		if(twist==0&&flip==0&&slice==0)
+		if(twist==0&&flip==0&&slice==0) // 似乎没有必要
 		{
 			int index_corner_p = Cube.cube_state.index_corner_p;
 			for (int i = 1; i <= Solution.len; i++)
@@ -845,77 +846,83 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 			{
 				if (flag) 
 					break;
-				if (pan[i + Solution.len] <= 0) 
-					continue;
-				search2(index_corner_p, index_other_p, index_middle_p, i + Solution.len, i);
+				DFSearch2(index_corner_p, index_other_p, index_middle_p, i);
 			}
 			flag = 0;
 		}
 	}
 	else
 	{
-		int flip1,twist1,slice1;
-		for(int i=0;i<=17;i++)
+		int flip1, twist1, slice1;
+		for (int i = 0; i <= 17; i++)
 		{
-			twist1 = twistMoveTable[twist][i];
-			flip1 = flipMoveTable[flip][i];
-			slice1 = sliceMoveTable[slice][i];
+			int x = Solution.operate_sequence[Solution.len];
+			if (x / 3 == i / 3) // 若连续两步操作同一个面，可以合并成一步，是不必要的操作
+				continue;
+			if (x / 3 - i / 3 == 1 && (x / 3) % 2 == 1) // 魔方相对两面的转动满足交换律，相对面连续转动是不必要的操作
+				continue;
+			twist1 = twistMoveTable[twist][i]; // 转动过后新的twist
+			flip1 = flipMoveTable[flip][i]; // 转动过后新的flip
+			slice1 = sliceMoveTable[slice][i]; // 转动过后新的slice
 			int dist1 = max(max(twistPruneTable[twist1], flipPruneTable[flip1]), slicePruneTable[slice1]);
-			if (dist1 > togo1 - 1)
+			if (dist1 > togo1 - 1) // 若步数大于最大深度，剪枝
 				continue;
 			Solution.len++;
-			Solution.operate_sequence[Solution.len] = i;
-			DFSearch1(Cube,twist1, flip1, slice1, togo1 - 1);
-			Solution.len--;
+			Solution.operate_sequence[Solution.len] = i; // 储存操作到答案序列
+			DFSearch1(Cube, twist1, flip1, slice1, togo1 - 1); // 进入下一层
+			Solution.len--; // 回溯
 		}
-
 	}
+	return;
 }
 
-void DFSearch2(int EP1,int EP2,int cnt,int togo2)
-{
+void DFSearch2(int cp, int epud,int epm,int togo2)
+{	
+	extern Solution Solution;
+	extern int serialNum;
+	extern string operationTrans[18];
+	extern int depthLimit;
 	if (flag)
 		return;
 	if (togo2 == 0)
 	{
-		if (CP == 0 && EP1 == 0 && EP2 == 0)
+		if (cp == 0 && epud == 0 && epm == 0)
 		{
-			xu++;
-			cout << xu << ":" << ans.len << " ";
-			for (int i = 1; i <= ans.len; i++)
-				cout << trans[ans.xulie[i]] << " ";
+			serialNum++;
+			cout << serialNum << ":" << Solution.len << " ";
+			for (int i = 1; i <= Solution.len; i++)
+				cout << operationTrans[Solution.operate_sequence[i]] << " ";
 			cout << endl;
-			minn = ans.len;
+			depthLimit = Solution.len;
 			flag = 1;
-			pan[cnt]--;
 		}
 		return;
 	}
 	else
 	{
-		int cp, ep1, ep2;
+		int cp1, epud1, epm1;
 		for (int i = 0; i <= 9; i++)
 		{
 			if (flag)
 				return;
-			int x = cz[i].a;
-			int y = cz[i].b;
+			int x = operationForStep2[i].a;
+			int y = operationForStep2[i].b;
 			int j = 3 * x + y;
-			int m = ans.xulie[ans.len];
+			int m = Solution.operate_sequence[Solution.len];
 			if (m / 3 == x)
 				continue;
 			if (m / 3 - x == 1 && (m / 3) % 2 == 1)
 				continue;
-			cp = cpMoveTable[CP][j];
-			ep1 = epMoveTable1[EP1][j];
-			ep2 = epMoveTable2[EP2][j];
-			int dist2 = max(max(PruneTable4[cp], PruneTable5[ep1]), PruneTable6[ep2]);
+			cp1 = cpMoveTable[cp][j];
+			epud1 = epudMoveTable[epud][j];
+			epm1 = epmMoveTable[epm][j];
+			int dist2 = max(max(cpPruneTable[cp1], epudPruneTable[epud1]), epmPruneTable[epm1]);
 			if (dist2 > togo2 - 1)
 				continue;
-			ans.len++;
-			ans.xulie[ans.len] = x * 3 + y;
-			search2(cp, ep1, ep2, cnt, togo2 - 1);
-			ans.len--;
+			Solution.len++;
+			Solution.operate_sequence[Solution.len] = x * 3 + y;
+			DFSearch2(cp1, epud1, epm1, togo2 - 1);
+			Solution.len--;
 		}
 	}
 	return;

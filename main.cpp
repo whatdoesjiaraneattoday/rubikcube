@@ -86,6 +86,9 @@ int main()
 	Solution Solution;
 	Solution.len=0;
 	Solution.operate_sequence[0] = 7890;
-	int depthLimit = 25; // 搜索深度
-
+	int depthLimit = 25; // 搜索深度限制
+	int flag = 0; // 标志位，完成解算后置1，使程序直接退出阶段二的迭代，回到阶段一
+	int serialNum = 0; // 解法编号
+	string operationTrans[18] = { "U","U2","U'","D","D2","D'","L","L2","L'",
+				  "R","R2","R'","F","F2","F'","B","B2","B'" }; // 操作名称
 }

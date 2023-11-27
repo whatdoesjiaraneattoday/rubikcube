@@ -1027,7 +1027,7 @@ void search1(int twist, int flip, int slice, int togo1)//阶段一的搜索
 {
 	if (togo1 == 0) // 如果阶段一已解决
 	{
-		if (twist == 0 && flip == 0 && slice == 0)
+		if (twist == 0 && flip == 0 && slice == 0) // 似乎没有必要
 		{
 			int x = initccp; 
 			Cube a = initc, b;

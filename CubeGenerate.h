@@ -186,9 +186,9 @@ void InitEpudPruneTable();
 // 中间层棱块位置剪枝表
 void InitEpmPruneTable();
 // DFS phase 1
-void DFSearch1(int twist,int flip, int slice, int togo1);
+void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1);
 // DFS phase 2
-void DFSearch2(int CP,int EP1,int EP2,int cnt,int togo2);
+void DFSearch2(int cp,int epud,int epm,int togo2);
 
 
 
