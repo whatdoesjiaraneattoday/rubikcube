@@ -362,7 +362,6 @@ void CubeGenerate::EdgeTransform1(const CubieCube *transform) // 棱块变换
 	return;
 }
 CubieCube movement[6]; // 六种基本操作变换
-
 void CubeGenerate::CubeMove(int m) // 魔方转动
 
 {
@@ -722,7 +721,6 @@ void InitSlicePruneTable() // 棱块位置组合的剪枝表
 
 // 阶段二允许的魔方操作
 CubeOperate operationForStep2[10] = {{U, 0}, {U, 1}, {U, 2}, {D, 0}, {D, 1}, {D, 2}, {L, 1}, {R, 1}, {F, 1}, {B, 1}};
-
 void InitCpPruneTable() // 角块位置剪枝表
 {
 	for (int i = 0; i < NCP; i++)
@@ -818,23 +816,27 @@ void InitEpmPruneTable() // 中间层棱块位置剪枝表
 	}
 	return;
 }
+Solution solution;
+int depthLimit=25;
+int flag=0;
+int serialNum=0;
+string operationTrans[18] = { "U","U2","U'","D","D2","D'","L","L2","L'",
+				  "R","R2","R'","F","F2","F'","B","B2","B'" };
 
 void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 {
-	extern Solution Solution;
-	extern int depthLimit;
-	extern int flag;
+	
 	if(togo1==0) // 若阶段一已解决
 	{
 		if(twist==0&&flip==0&&slice==0) // 似乎没有必要
 		{
 			int index_corner_p = Cube.cube_state.index_corner_p;
-			for (int i = 1; i <= Solution.len; i++)
+			for (int i = 1; i <= solution.len; i++)
 			{
-				index_corner_p = cpMoveTable[index_corner_p][Solution.operate_sequence[i]];
-				for (int j = 0; j <= Solution.operate_sequence[i] % 3; j++)
+				index_corner_p = cpMoveTable[index_corner_p][solution.operate_sequence[i]];
+				for (int j = 0; j <= solution.operate_sequence[i] % 3; j++)
 				{
-					Cube.EdgeTransform1(&movement[Solution.operate_sequence[i] / 3]); 
+					Cube.EdgeTransform1(&movement[solution.operate_sequence[i] / 3]); 
 				}
 			}
 			Cube.EncodeEdge();
@@ -842,7 +844,7 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 			int index_middle_p = Cube.cube_state.index_middle_p;
 			//cout<<x<<" "<<y<<" "<<z<<endl;
 			int m = max(max(cpPruneTable[index_corner_p], epudPruneTable[index_other_p]), epmPruneTable[index_middle_p]);
-			for (int i = m; i <= depthLimit - Solution.len; i++)
+			for (int i = m; i <= depthLimit - solution.len; i++)
 			{
 				if (flag) 
 					break;
@@ -856,7 +858,7 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 		int flip1, twist1, slice1;
 		for (int i = 0; i <= 17; i++)
 		{
-			int x = Solution.operate_sequence[Solution.len];
+			int x = solution.operate_sequence[solution.len];
 			if (x / 3 == i / 3) // 若连续两步操作同一个面，可以合并成一步，是不必要的操作
 				continue;
 			if (x / 3 - i / 3 == 1 && (x / 3) % 2 == 1) // 魔方相对两面的转动满足交换律，相对面连续转动是不必要的操作
@@ -867,10 +869,10 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 			int dist1 = max(max(twistPruneTable[twist1], flipPruneTable[flip1]), slicePruneTable[slice1]);
 			if (dist1 > togo1 - 1) // 若步数大于最大深度，剪枝
 				continue;
-			Solution.len++;
-			Solution.operate_sequence[Solution.len] = i; // 储存操作到答案序列
+			solution.len++;
+			solution.operate_sequence[solution.len] = i; // 储存操作到答案序列
 			DFSearch1(Cube, twist1, flip1, slice1, togo1 - 1); // 进入下一层
-			Solution.len--; // 回溯
+			solution.len--; // 回溯
 		}
 	}
 	return;
@@ -878,11 +880,7 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 
 void DFSearch2(int cp, int epud,int epm,int togo2)
 {	
-	extern Solution Solution;
-	extern int serialNum;
-	extern string operationTrans[18];
-	extern int depthLimit;
-	extern int flag
+
 	if (flag)
 		return;
 	if (togo2 == 0)
@@ -890,11 +888,11 @@ void DFSearch2(int cp, int epud,int epm,int togo2)
 		if (cp == 0 && epud == 0 && epm == 0)
 		{
 			serialNum++;
-			cout << serialNum << ":" << Solution.len << " ";
-			for (int i = 1; i <= Solution.len; i++)
-				cout << operationTrans[Solution.operate_sequence[i]] << " ";
+			cout << serialNum << ":" << solution.len << " ";
+			for (int i = 1; i <= solution.len; i++)
+				cout << operationTrans[solution.operate_sequence[i]] << " ";
 			cout << endl;
-			depthLimit = Solution.len;
+			depthLimit = solution.len;
 			flag = 1;
 		}
 		return;
@@ -909,7 +907,7 @@ void DFSearch2(int cp, int epud,int epm,int togo2)
 			int x = operationForStep2[i].a;
 			int y = operationForStep2[i].b;
 			int j = 3 * x + y;
-			int m = Solution.operate_sequence[Solution.len];
+			int m = solution.operate_sequence[solution.len];
 			if (m / 3 == x)
 				continue;
 			if (m / 3 - x == 1 && (m / 3) % 2 == 1)
@@ -920,11 +918,20 @@ void DFSearch2(int cp, int epud,int epm,int togo2)
 			int dist2 = max(max(cpPruneTable[cp1], epudPruneTable[epud1]), epmPruneTable[epm1]);
 			if (dist2 > togo2 - 1)
 				continue;
-			Solution.len++;
-			Solution.operate_sequence[Solution.len] = x * 3 + y;
+			solution.len++;
+			solution.operate_sequence[solution.len] = x * 3 + y;
 			DFSearch2(cp1, epud1, epm1, togo2 - 1);
-			Solution.len--;
+			solution.len--;
 		}
 	}
 	return;
+}
+void Search(CubeGenerate Cube)
+{
+	int x=max(max(twistPruneTable[Cube.cube_state.index_corner_o],flipPruneTable[Cube.cube_state.index_edge_o]),slicePruneTable[Cube.cube_state.index_combination]);
+
+	for(int i=x;i<=depthLimit;i++)
+	{
+		DFSearch1(Cube,Cube.cube_state.index_corner_o,Cube.cube_state.index_edge_o,Cube.cube_state.index_combination,i);
+	}
 }
