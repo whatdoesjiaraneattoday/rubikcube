@@ -190,6 +190,6 @@ void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1);
 // DFS phase 2
 void DFSearch2(int cp,int epud,int epm,int togo2);
 
-
+void Search(CubeGenerate Cube);
 
 #endif

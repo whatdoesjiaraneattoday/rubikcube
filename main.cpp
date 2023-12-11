@@ -1,9 +1,9 @@
 ﻿#include "CubeGenerate.h"
 
-Solution Solution;
 int main()
 {
 	extern CubieCube movement[6];
+
 	movement[U] = {// URF槽的元素被UFL槽的元素替代，且顺时针扭转，方向加1
 				   {{UBR, 0}, {URF, 0}, {UFL, 0}, {ULB, 0}, {DFR, 0}, {DLF, 0}, {DBL, 0}, {DRB, 0}},
 				   {{UB, 0}, {UR, 0}, {UF, 0}, {UL, 0}, {DR, 0}, {DF, 0}, {DL, 0}, {DB, 0}, {FR, 0}, {FL, 0}, {BL, 0}, {BR, 0}},
@@ -65,7 +65,7 @@ int main()
 				   0,
 				   0};
 	CubeGenerate Cube;
-
+	
 	InitCpMoveTable();
 	InitEpudMoveTable();
 	InitEpmMoveTable();
@@ -85,12 +85,11 @@ int main()
 	Cube.GetCube();
 	Cube.EncodeCorner();
 	Cube.EncodeEdge();
-	Solution Solution;
-	Solution.len=0;
-	Solution.operate_sequence[0] = 7890;
-	int depthLimit = 25; // 搜索深度限制
-	int flag = 0; // 标志位，完成解算后置1，使程序直接退出阶段二的迭代，回到阶段一
-	int serialNum = 0; // 解法编号
-	string operationTrans[18] = { "U","U2","U'","D","D2","D'","L","L2","L'",
-				  "R","R2","R'","F","F2","F'","B","B2","B'" }; // 操作名称
+	extern Solution solution;
+	solution.len=0;
+	solution.operate_sequence[0] = 7890;
+	extern int depthLimit; // 搜索深度限制
+	extern int flag ; // 标志位，完成解算后置1，使程序直接退出阶段二的迭代，回到阶段一
+	extern int serialNum; // 解法编号
+	Search(Cube);
 }
