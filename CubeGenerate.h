@@ -109,6 +109,7 @@ struct Solution
 {
     int operate_sequence[10000];
     int len;
+    string equation[10000];
 };
 
 struct CubeOperate // 魔方操作
@@ -189,7 +190,7 @@ void InitEpmPruneTable();
 void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1);
 // DFS phase 2
 void DFSearch2(int cp,int epud,int epm,int togo2);
-
+// 搜索
 void Search(CubeGenerate Cube);
 
 #endif

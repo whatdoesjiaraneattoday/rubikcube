@@ -1,14 +1,4 @@
-/**
- * @file CubeGenerate.cpp
- * @author Lou Bin ({3189529472@qq.com})
- * @brief
- * @version 0.1
- * @date 2023-10-06
- *
- * @copyright Copyright (c) 2023
- *
- */
-
+//魔方求解函数，通过DFS甲加上剪枝求解出魔方还原公式
 #include "CubeGenerate.h"
 using namespace std;
 
@@ -38,7 +28,7 @@ long long n_C_m(int n, int m)
 	}
 }
 
-void CubeGenerate::EncodeCorner(void) // 
+void CubeGenerate::EncodeCorner(void) //
 {
 	int index_p = 0;
 	int index_o = 0;
@@ -114,12 +104,12 @@ void CubeGenerate::DecodeCorner(void)
 	}
 	int sum;
 	sum = count_o[0] * 0 + 1 * count_o[1] + 2 * count_o[2];
-	if(sum%3==0)
+	if (sum % 3 == 0)
 	{
-	cube_state.co[DRB].o = 0;
+		cube_state.co[DRB].o = 0;
 	}
 	else
-	cube_state.co[DRB].o = 3 - sum % 3;
+		cube_state.co[DRB].o = 3 - sum % 3;
 }
 
 void CubeGenerate::EncodeEdge(void)
@@ -134,7 +124,7 @@ void CubeGenerate::EncodeEdge(void)
 	{
 		index_o = 2 * index_o + cube_state.eo[e].o;
 	}
-	cube_state.index_edge_o = index_o; 
+	cube_state.index_edge_o = index_o;
 
 	// 组合数编码
 	for (int i = BR; i >= UR; i--)
@@ -196,7 +186,7 @@ void CubeGenerate::EncodeEdge(void)
 void CubeGenerate::DecodeEdge(int select_num) // n=0 方向 n=1 全位置解码 n=2 上下层解码 n=3 中间层解码 n=4 位置解码
 {
 	int A_11[12] = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800};
-	int power_2[13] = {1,1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
+	int power_2[13] = {1, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
 	int index = 0;
 	int count_o[2] = {0, 0};
 	// 方向解码
@@ -223,10 +213,10 @@ void CubeGenerate::DecodeEdge(int select_num) // n=0 方向 n=1 全位置解码 
 		{
 			int sum;
 			sum = count_o[0] * 0 + 1 * count_o[1];
-			if(sum%2==0)
-			cube_state.eo[BR].o=0;
+			if (sum % 2 == 0)
+				cube_state.eo[BR].o = 0;
 			else
-			cube_state.eo[BR].o = 2 - sum % 2;
+				cube_state.eo[BR].o = 2 - sum % 2;
 		}
 	}
 	else if (select_num == 1)
@@ -319,7 +309,7 @@ void CubeGenerate::DecodeEdge(int select_num) // n=0 方向 n=1 全位置解码 
 		{
 			cube_state.eo[i].e = Edge(0);
 		}
-		for (int i = 0; i <=11; i++)
+		for (int i = 0; i <= 11; i++)
 		{
 			if (index >= n_C_m(11 - i, num))
 			{
@@ -361,7 +351,7 @@ void CubeGenerate::EdgeTransform1(const CubieCube *transform) // 棱块变换
 	}
 	return;
 }
-CubieCube movement[6]; // 六种基本操作变换
+CubieCube movement[6];			   // 六种基本操作变换
 void CubeGenerate::CubeMove(int m) // 魔方转动
 
 {
@@ -454,7 +444,7 @@ void CubeGenerate::ShowState(int n) // i=0 show o i=1 show c  i=2 show o i=3 sho
 			cout << "eo[" << i << "]o:" << cube_state.eo[i].o << endl;
 		}
 	}
-	if (n ==3)
+	if (n == 3)
 	{
 		cout << "Cube State" << endl;
 		for (int i = 0; i <= 11; i++)
@@ -462,15 +452,15 @@ void CubeGenerate::ShowState(int n) // i=0 show o i=1 show c  i=2 show o i=3 sho
 			cout << "eo[" << i << "]e:" << cube_state.eo[i].e << endl;
 		}
 	}
-	if(n==4)
+	if (n == 4)
 	{
 		cout << "Cube State" << endl;
-		cout<<"index_corner_o:"<<cube_state.index_corner_o<< endl;
-		cout<<"index_corner_p:"<<cube_state.index_corner_p<< endl;
-		cout<<"index_edge_o:"<<cube_state.index_edge_o<< endl;
-		cout<<"index_other_p:"<<cube_state.index_other_p<< endl;
-		cout<<"index_combination:"<<cube_state.index_combination<< endl;
-		cout<<"index_middle_p:"<<cube_state.index_middle_p<< endl;
+		cout << "index_corner_o:" << cube_state.index_corner_o << endl;
+		cout << "index_corner_p:" << cube_state.index_corner_p << endl;
+		cout << "index_edge_o:" << cube_state.index_edge_o << endl;
+		cout << "index_other_p:" << cube_state.index_other_p << endl;
+		cout << "index_combination:" << cube_state.index_combination << endl;
+		cout << "index_middle_p:" << cube_state.index_middle_p << endl;
 	}
 }
 
@@ -590,7 +580,6 @@ void InitTwistMoveTable() // 初始化角块方向转动表
 				twistMoveTable[i][j * 3 + k] = a.cube_state.index_corner_o;
 			}
 			a.CornerTransform(&movement[j]);
-
 		}
 	}
 	return;
@@ -817,18 +806,19 @@ void InitEpmPruneTable() // 中间层棱块位置剪枝表
 	return;
 }
 Solution solution;
-int depthLimit=25;
-int flag=0;
-int serialNum=0;
-string operationTrans[18] = { "U","U2","U'","D","D2","D'","L","L2","L'",
-				  "R","R2","R'","F","F2","F'","B","B2","B'" };
+int depthLimit = 25;
+int flag = 0;
+int serialNum = 0;
+int equtionNum = 0;
+string operationTrans[18] = {"U", "U2", "U'", "D", "D2", "D'", "L", "L2", "L'",
+							 "R", "R2", "R'", "F", "F2", "F'", "B", "B2", "B'"};
 
-void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
+void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1)
 {
-	
-	if(togo1==0) // 若阶段一已解决
+
+	if (togo1 == 0) // 若阶段一已解决
 	{
-		if(twist==0&&flip==0&&slice==0) // 似乎没有必要
+		if (twist == 0 && flip == 0 && slice == 0) // 似乎没有必要
 		{
 			int index_corner_p = Cube.cube_state.index_corner_p;
 			for (int i = 1; i <= solution.len; i++)
@@ -836,17 +826,17 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 				index_corner_p = cpMoveTable[index_corner_p][solution.operate_sequence[i]];
 				for (int j = 0; j <= solution.operate_sequence[i] % 3; j++)
 				{
-					Cube.EdgeTransform1(&movement[solution.operate_sequence[i] / 3]); 
+					Cube.EdgeTransform1(&movement[solution.operate_sequence[i] / 3]);
 				}
 			}
 			Cube.EncodeEdge();
 			int index_other_p = Cube.cube_state.index_other_p;
 			int index_middle_p = Cube.cube_state.index_middle_p;
-			//cout<<x<<" "<<y<<" "<<z<<endl;
+			// cout<<x<<" "<<y<<" "<<z<<endl;
 			int m = max(max(cpPruneTable[index_corner_p], epudPruneTable[index_other_p]), epmPruneTable[index_middle_p]);
 			for (int i = m; i <= depthLimit - solution.len; i++)
 			{
-				if (flag) 
+				if (flag)
 					break;
 				DFSearch2(index_corner_p, index_other_p, index_middle_p, i);
 			}
@@ -864,22 +854,22 @@ void DFSearch1(CubeGenerate Cube,int twist, int flip, int slice, int togo1)
 			if (x / 3 - i / 3 == 1 && (x / 3) % 2 == 1) // 魔方相对两面的转动满足交换律，相对面连续转动是不必要的操作
 				continue;
 			twist1 = twistMoveTable[twist][i]; // 转动过后新的twist
-			flip1 = flipMoveTable[flip][i]; // 转动过后新的flip
+			flip1 = flipMoveTable[flip][i];	   // 转动过后新的flip
 			slice1 = sliceMoveTable[slice][i]; // 转动过后新的slice
 			int dist1 = max(max(twistPruneTable[twist1], flipPruneTable[flip1]), slicePruneTable[slice1]);
 			if (dist1 > togo1 - 1) // 若步数大于最大深度，剪枝
 				continue;
 			solution.len++;
-			solution.operate_sequence[solution.len] = i; // 储存操作到答案序列
+			solution.operate_sequence[solution.len] = i;	   // 储存操作到答案序列
 			DFSearch1(Cube, twist1, flip1, slice1, togo1 - 1); // 进入下一层
-			solution.len--; // 回溯
+			solution.len--;									   // 回溯
 		}
 	}
 	return;
 }
 
-void DFSearch2(int cp, int epud,int epm,int togo2)
-{	
+void DFSearch2(int cp, int epud, int epm, int togo2)
+{
 
 	if (flag)
 		return;
@@ -890,10 +880,15 @@ void DFSearch2(int cp, int epud,int epm,int togo2)
 			serialNum++;
 			cout << serialNum << ":" << solution.len << " ";
 			for (int i = 1; i <= solution.len; i++)
+			{
 				cout << operationTrans[solution.operate_sequence[i]] << " ";
+				solution.equation[equtionNum] = solution.equation[equtionNum] + operationTrans[solution.operate_sequence[i]] + " ";
+			}
 			cout << endl;
+
 			depthLimit = solution.len;
 			flag = 1;
+			equtionNum++;
 		}
 		return;
 	}
@@ -926,12 +921,12 @@ void DFSearch2(int cp, int epud,int epm,int togo2)
 	}
 	return;
 }
-void Search(CubeGenerate Cube)
+void Search(CubeGenerate Cube) 
 {
-	int x=max(max(twistPruneTable[Cube.cube_state.index_corner_o],flipPruneTable[Cube.cube_state.index_edge_o]),slicePruneTable[Cube.cube_state.index_combination]);
+	int x = max(max(twistPruneTable[Cube.cube_state.index_corner_o], flipPruneTable[Cube.cube_state.index_edge_o]), slicePruneTable[Cube.cube_state.index_combination]);
 
-	for(int i=x;i<=depthLimit;i++)
+	for (int i = x; i <= depthLimit; i++)
 	{
-		DFSearch1(Cube,Cube.cube_state.index_corner_o,Cube.cube_state.index_edge_o,Cube.cube_state.index_combination,i);
+		DFSearch1(Cube, Cube.cube_state.index_corner_o, Cube.cube_state.index_edge_o, Cube.cube_state.index_combination, i);
 	}
 }

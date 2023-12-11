@@ -1,5 +1,5 @@
 ﻿#include "CubeGenerate.h"
-
+#include "CubeExplorer.h"
 int main()
 {
 	extern CubieCube movement[6];
@@ -65,7 +65,7 @@ int main()
 				   0,
 				   0};
 	CubeGenerate Cube;
-	
+
 	InitCpMoveTable();
 	InitEpudMoveTable();
 	InitEpmMoveTable();
@@ -86,10 +86,19 @@ int main()
 	Cube.EncodeCorner();
 	Cube.EncodeEdge();
 	extern Solution solution;
-	solution.len=0;
+	solution.len = 0;
 	solution.operate_sequence[0] = 7890;
 	extern int depthLimit; // 搜索深度限制
-	extern int flag ; // 标志位，完成解算后置1，使程序直接退出阶段二的迭代，回到阶段一
-	extern int serialNum; // 解法编号
+	extern int flag;	   // 标志位，完成解算后置1，使程序直接退出阶段二的迭代，回到阶段一
+	extern int serialNum;  // 解法编号
+	extern int equtionNum;
 	Search(Cube);
+	CubeExplorer cube_explorer;
+	for (int i = 0; i < equtionNum; i++)
+	{
+		cube_explorer.SetTarget(solution.equation[i]);
+		cube_explorer.GetShortestWay();
+		cube_explorer.ShowOperations();
+		cube_explorer.Reset();
+	}
 }
