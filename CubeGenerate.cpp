@@ -882,7 +882,7 @@ void DFSearch2(int cp, int epud,int epm,int togo2)
 	extern int serialNum;
 	extern string operationTrans[18];
 	extern int depthLimit;
-	extern int flag
+	extern int flag;
 	if (flag)
 		return;
 	if (togo2 == 0)

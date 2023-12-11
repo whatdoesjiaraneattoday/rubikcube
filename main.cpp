@@ -1,4 +1,6 @@
 ﻿#include "CubeGenerate.h"
+
+Solution Solution;
 int main()
 {
 	extern CubieCube movement[6];
