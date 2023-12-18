@@ -1,5 +1,5 @@
 #include"CubeExplorer.h"
-OperationBinaryTree tree;
+//OperationBinaryTree tree;
 Node* pnode=nullptr;
 Node* precode_node=nullptr;
 CubeExplorer::CubeExplorer(char* cstr,const HandState& hs):target(cstr),handState(hs){}
@@ -12,7 +12,7 @@ void CubeExplorer::OnR(vector<string>::iterator& iter,int direction) {
 	RightTight(direction);											//右爪夹紧
 	GetLeftReadyAndTight(direction);									//左爪调整至90/270°且夹紧
 	macVec.push_back(Operation::R);							//右爪顺时针转动90°（存储到容器内，之后进行发送）
-	pnode=tree.insert(pnode,Operation::R,direction);
+	//pnode=tree.insert(pnode,Operation::R,direction);
 	handState.right.isReady = !handState.right.isReady;		//设置右爪状态参数
 
 	transCnt++;
@@ -22,7 +22,7 @@ void CubeExplorer::On_R(vector<string>::iterator& iter,int direction) {
 	RightTight(direction);
 	GetLeftReadyAndTight(direction);
 	macVec.push_back(Operation::_R);
-	pnode=tree.insert(pnode,Operation::_R,direction);
+	//pnode=tree.insert(pnode,Operation::_R,direction);
 	handState.right.isReady = !handState.right.isReady; 
 
 	transCnt++;
@@ -32,7 +32,7 @@ void CubeExplorer::OnF(vector<string>::iterator& iter,int direction) {
 	LeftTight(direction);
 	GetRightReadyAndTight(direction);
 	macVec.push_back(Operation::F);
-	pnode=tree.insert(pnode,Operation::F,direction);
+	//pnode=tree.insert(pnode,Operation::F,direction);
 	handState.left.isReady = !handState.left.isReady;
 
 	transCnt++; 
@@ -42,7 +42,7 @@ void CubeExplorer::On_F(vector<string>::iterator& iter,int direction) {
 	LeftTight(direction);
 	GetRightReadyAndTight(direction);
 	macVec.push_back(Operation::_F);
-	pnode=tree.insert(pnode,Operation::F,direction);
+	//pnode=tree.insert(pnode,Operation::F,direction);
 
 	handState.left.isReady = !handState.left.isReady;
 
@@ -54,7 +54,7 @@ void CubeExplorer::OnRR(vector<string>::iterator& iter,int direction) {
 	LeftLoose(direction);											//左爪松开
 	LeftReady(direction);											//左爪转动至90/270°状态
 	macVec.push_back(Operation::R);							//右爪顺时针转动90°
-	pnode=tree.insert(pnode,Operation::R,direction);
+	//pnode=tree.insert(pnode,Operation::R,direction);
 	handState.right.isReady = !handState.right.isReady;		//设置右爪状态参数
 	for (auto it = iter + 1; it != strNorVec.end(); it++) {	//由于魔方整体转动后，面的定义发生变化，
 		if (*it == "U") *it = "B";							//因此需要遍历之后的操作，全部调整为转变后的定义
@@ -79,7 +79,7 @@ void CubeExplorer::On_RR(vector<string>::iterator& iter,int direction) {
 	LeftLoose(direction);
 	LeftReady(direction);
 	macVec.push_back(Operation::_R);
-	pnode=tree.insert(pnode,Operation::_R,direction);
+	//pnode=tree.insert(pnode,Operation::_R,direction);
 	handState.right.isReady = !handState.right.isReady;
 	for (auto it = iter + 1; it != strNorVec.end(); it++) {
 		if (*it == "U") *it = "F";
@@ -104,7 +104,7 @@ void CubeExplorer::OnFF(vector<string>::iterator& iter,int direction) {
 	RightLoose(direction);
 	RightReady(direction);
 	macVec.push_back(Operation::F);
-	pnode=tree.insert(pnode,Operation::F,direction);
+	//pnode=tree.insert(pnode,Operation::F,direction);
 	handState.left.isReady = !handState.left.isReady;
 	for (auto it = iter + 1; it != strNorVec.end(); it++) {
 		if (*it == "U") *it = "R";
@@ -129,7 +129,7 @@ void CubeExplorer::On_FF(vector<string>::iterator& iter,int direction) {
 	RightLoose(direction);
 	RightReady(direction);
 	macVec.push_back(Operation::_F);
-	pnode=tree.insert(pnode,Operation::_F,direction);
+	//pnode=tree.insert(pnode,Operation::_F,direction);
 	handState.left.isReady = !handState.left.isReady;
 	for (auto it = iter + 1; it != strNorVec.end(); it++) {
 		if (*it == "U") *it = "L";
@@ -154,7 +154,7 @@ void CubeExplorer::OnRR2(vector<string>::iterator& iter,int direction) {
 	LeftLoose(direction);
 	LeftReady(direction);
 	macVec.push_back(Operation::R2);
-	pnode=tree.insert(pnode,Operation::R2,direction);
+	//pnode=tree.insert(pnode,Operation::R2,direction);
 	for (auto it = iter + 1; it != strNorVec.end(); it++) {
 		if (*it == "U") *it = "D";
 		else if (*it == "B") *it = "F";
@@ -178,7 +178,7 @@ void CubeExplorer::OnFF2(vector<string>::iterator& iter,int direction) {
 	RightLoose(direction);
 	RightReady(direction);
 	macVec.push_back(Operation::F2);
-	pnode=tree.insert(pnode,Operation::R2,direction);
+	//pnode=tree.insert(pnode,Operation::R2,direction);
 	for (auto it = iter + 1; it != strNorVec.end(); it++) {
 		if (*it == "U") *it = "D";
 		else if (*it == "R") *it = "L";
@@ -201,7 +201,7 @@ void CubeExplorer::OnR2(vector<string>::iterator& iter,int direction) {
 	RightTight(direction);
 	GetLeftReadyAndTight(direction);
 	macVec.push_back(Operation::R2);
-	pnode=tree.insert(pnode,Operation::R2,direction);
+	//pnode=tree.insert(pnode,Operation::R2,direction);
 
 	transCnt++;
 }
@@ -210,7 +210,7 @@ void CubeExplorer::OnF2(vector<string>::iterator& iter,int direction) {
 	LeftTight(direction);
 	GetRightReadyAndTight(direction);
 	macVec.push_back(Operation::F2);
-	pnode=tree.insert(pnode,Operation::F2,direction);
+	//pnode=tree.insert(pnode,Operation::F2,direction);
 
 	transCnt++;
 }
@@ -218,7 +218,7 @@ void CubeExplorer::OnF2(vector<string>::iterator& iter,int direction) {
 void CubeExplorer::LeftLoose(int direction) {
 	if (handState.left.isTight) {
 		macVec.push_back(Operation::LeftLoose);
-		pnode=tree.insert(pnode,Operation::LeftLoose,direction);
+		//pnode=tree.insert(pnode,Operation::LeftLoose,direction);
 		handState.left.isTight = false;
 	}
 }
@@ -227,10 +227,10 @@ void CubeExplorer::LeftTight(int direction) {
 	if (!handState.left.isTight) {
 		if ((!handState.right.isReady) && (!handState.left.isReady)) {
 			macVec.push_back(Operation::F);
-			pnode=tree.insert(pnode,Operation::F,direction);
+			//pnode=tree.insert(pnode,Operation::F,direction);
 		}
 		macVec.push_back(Operation::LeftTight);
-		pnode=tree.insert(pnode,Operation::LeftTight,direction);
+		//pnode=tree.insert(pnode,Operation::LeftTight,direction);
 		handState.left.isTight = true;
 	}
 }
@@ -238,7 +238,7 @@ void CubeExplorer::LeftTight(int direction) {
 void CubeExplorer::LeftReady(int direction) {
 	if (!handState.left.isReady) {
 		macVec.push_back(Operation::F);
-		pnode=tree.insert(pnode,Operation::F,direction);
+		//pnode=tree.insert(pnode,Operation::F,direction);
 		handState.left.isReady = true;
 	}
 }
@@ -246,7 +246,7 @@ void CubeExplorer::LeftReady(int direction) {
 void CubeExplorer::RightLoose(int direction) {
 	if (handState.right.isTight) {
 		macVec.push_back(Operation::RightLoose);
-		pnode=tree.insert(pnode,Operation::RightLoose,direction);
+		//pnode=tree.insert(pnode,Operation::RightLoose,direction);
 		handState.right.isTight = false;
 	}
 }
@@ -255,10 +255,10 @@ void CubeExplorer::RightTight(int direction) {
 	if (!handState.right.isTight) {
 		if ((!handState.right.isReady) && (!handState.left.isReady)) {
 			macVec.push_back(Operation::R);
-			pnode=tree.insert(pnode,Operation::R,direction);
+			//pnode=tree.insert(pnode,Operation::R,direction);
 		}
 		macVec.push_back(Operation::RightTight);
-		pnode=tree.insert(pnode,Operation::RightTight,direction);
+		//pnode=tree.insert(pnode,Operation::RightTight,direction);
 
 		handState.right.isTight = true;
 	}
@@ -267,7 +267,7 @@ void CubeExplorer::RightTight(int direction) {
 void CubeExplorer::RightReady(int direction) {
 	if (!handState.right.isReady) {
 		macVec.push_back(Operation::R);
-		pnode=tree.insert(pnode,Operation::R,direction);
+		//pnode=tree.insert(pnode,Operation::R,direction);
 		handState.right.isReady = true;
 	}
 }
@@ -276,25 +276,25 @@ void CubeExplorer::GetLeftReadyAndTight(int direction) {
 	if (handState.left.isReady) {
 		if (!handState.left.isTight) {
 			macVec.push_back(Operation::LeftTight);
-			pnode=tree.insert(pnode,Operation::LeftTight,direction);
+			//pnode=tree.insert(pnode,Operation::LeftTight,direction);
 			handState.left.isTight = true;
 		}
 	}
 	else {
 		if (handState.left.isTight) {
 			macVec.push_back(Operation::LeftLoose);
-			pnode=tree.insert(pnode,Operation::LeftLoose,direction);
+			//pnode=tree.insert(pnode,Operation::LeftLoose,direction);
 			macVec.push_back(Operation::F);
-			pnode=tree.insert(pnode,Operation::F,direction);
+			//pnode=tree.insert(pnode,Operation::F,direction);
 			macVec.push_back(Operation::LeftTight);
-			pnode=tree.insert(pnode,Operation::LeftTight,direction);
+			//pnode=tree.insert(pnode,Operation::LeftTight,direction);
 
 		}
 		else {
 			macVec.push_back(Operation::F);
-			pnode=tree.insert(pnode,Operation::F,direction);
+			//pnode=tree.insert(pnode,Operation::F,direction);
 			macVec.push_back(Operation::LeftTight);
-			pnode=tree.insert(pnode,Operation::LeftTight,direction);
+			//pnode=tree.insert(pnode,Operation::LeftTight,direction);
 			handState.left.isTight = true;
 		}
 		handState.left.isReady = true;
@@ -305,25 +305,25 @@ void CubeExplorer::GetRightReadyAndTight(int direction) {
 	if (handState.right.isReady) {
 		if (!handState.right.isTight) {
 			macVec.push_back(Operation::RightTight);
-			pnode=tree.insert(pnode,Operation::RightTight,direction);
+			//pnode=tree.insert(pnode,Operation::RightTight,direction);
 			handState.right.isTight = true;
 		}
 	}
 	else {
 		if (handState.right.isTight) {
 			macVec.push_back(Operation::RightLoose);
-			pnode=tree.insert(pnode,Operation::RightLoose,direction);
+			//pnode=tree.insert(pnode,Operation::RightLoose,direction);
 			macVec.push_back(Operation::R);
-			pnode=tree.insert(pnode,Operation::R,direction);
+			//pnode=tree.insert(pnode,Operation::R,direction);
 			macVec.push_back(Operation::RightTight);
-			pnode=tree.insert(pnode,Operation::RightTight,direction);
+			//pnode=tree.insert(pnode,Operation::RightTight,direction);
 
 		}
 		else {
 			macVec.push_back(Operation::R);
-			pnode=tree.insert(pnode,Operation::R,direction);
+			//pnode=tree.insert(pnode,Operation::R,direction);
 			macVec.push_back(Operation::RightTight);
-			pnode=tree.insert(pnode,Operation::RightTight,direction);
+			//pnode=tree.insert(pnode,Operation::RightTight,direction);
 			handState.right.isTight = true;
 		}
 		handState.right.isReady = true;
@@ -363,7 +363,7 @@ void CubeExplorer::GetShortestWay() {
 		}
 		else if (*iter == "U") {
 			if (STRATEGY == 1) {
-				precode_node=tree.record(pnode);
+				//precode_node=tree.record(pnode);
 				OnFF(iter,1);
 				OnR(iter,1); 
 			}
@@ -377,7 +377,7 @@ void CubeExplorer::GetShortestWay() {
 							*(iter + 1) == "B" || *(iter + 1) == "B'" || *(iter + 1) == "B2")) {		//
 						   //若左右手都处于90/270°状态，那么无论先F后R或先R后F，当前操作需要的指令数是一样的。因此仅考虑当前操作之后的操作
 						   //如果紧跟的操作是F面和B面操作，那么对于当前操作之后的那个操作，策略1比策略2少4个机械爪指令，因此采用策略1
-						precode_node=tree.record(pnode);
+						//precode_node=tree.record(pnode);
 						OnFF(iter);
 						OnR(iter);
 					}
@@ -586,6 +586,26 @@ void CubeExplorer::ShowOperations() {
 	cout << "Final operations' count: " << cnt << endl;
 	cout << "All operations' count: " << macVec.size() << endl;
 	cout << endl;
+}
+
+int CubeExplorer::GetOperationTime() {
+	int time = 0;
+	for (auto iter = macVec.cbegin(); iter != macVec.cend(); iter++) {
+		switch (*iter) {
+			case Operation::R: time += 1; break;
+			case Operation::_R: time += 1; break;
+			case Operation::F: time += 1; break;
+			case Operation::_F: time += 1; break;
+			case Operation::R2: time += 1; break;
+			case Operation::F2: time += 1; break;
+			case Operation::LeftLoose: time += 1; break;
+			case Operation::LeftTight: time += 1; break;
+			case Operation::RightLoose: time += 1; break;
+			case Operation::RightTight: time += 1; break;
+		}
+	}
+	//cout << time << endl;
+	return time;
 }
 
 void CubeExplorer::Reset() {

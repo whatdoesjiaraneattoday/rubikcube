@@ -109,6 +109,7 @@ struct Solution
 {
     int operate_sequence[10000];
     int len;
+    int time;
     string equation[10000];
 };
 

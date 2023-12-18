@@ -30,12 +30,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OperationBinaryTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeExplorer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CubeGenerate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationBinaryTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
