@@ -89,6 +89,8 @@ public:
 	void ShowOperations();			//打印操作序列，主要用于调试和测试
 	int GetOperationTime();         //获取完成操作序列需要的时间
 	void Reset();
+	void dfs(vector<string> operation_seq,vector<Operation> maneuver);
+	
 };
 
 
