@@ -3,7 +3,10 @@
 
 #define STRATEGY 1
 
-#include "OperationBinaryTree.h"
+#include<vector>
+#include<string>
+#include<fstream>
+#include<iostream>
 
 //表示某个机械手状态的结构，作为HandState的成员
 struct HandStateForOne {
@@ -24,8 +27,19 @@ struct HandState {
 	}
 };
 
-
-
+//表示机械手各操作的枚举
+enum class Operation {
+	R,		//右手顺时针转动
+	_R ,	//右手逆时针转动
+	F,		//左手顺时针转动
+	_F ,	//左手逆时针转动
+	R2 ,	//R面转动180°
+	F2 ,	//F面转动180°
+	LeftLoose,	//左手松开		
+	LeftTight,	//左手夹紧
+	RightLoose,	//右手松开
+	RightTight	//右手夹紧
+};
 
 using namespace std;
 
@@ -42,7 +56,7 @@ public:
 	HandState handState;	//自定义类HandState类型，表示当前机械手状态
 	int transCnt = 0;					//记录魔方翻转次数
 	
-	CubeExplorer(char* cstr="", const HandState &hs=HandState(true,true,true,true));
+	CubeExplorer(char* cstr="", const HandState& hs=HandState(true,true,true,true));
 	
 	friend ostream& operator<<(ostream&, const Operation&);		//友元操作符重载函数支持Operation类型和cout的直接使用，主要用于调试
 
@@ -50,27 +64,27 @@ public:
 	vector<string>& GetVecStrSerial();
 
 	//以下操作定义针对魔方本身，封装机械爪操作
-	void OnR(vector<string>::iterator&,int direction=0);		//R面顺时针转动
-	void On_R(vector<string>::iterator&,int direction=0);		//R面逆时针转动
-	void OnR2(vector<string>::iterator&,int direction=0);		//R面转动180°
-	void OnF(vector<string>::iterator&,int direction=0);		//F面类似
-	void On_F(vector<string>::iterator&,int direction=0);		//
-	void OnF2(vector<string>::iterator&,int direction=0);		//
-	void OnRR(vector<string>::iterator&,int direction=0);		//魔方沿R面顺时针方向整体转动
-	void On_RR(vector<string>::iterator&,int direction=0);		//魔方沿R面逆时针方向整体转动
-	void OnRR2(vector<string>::iterator&,int direction=0);		//魔方沿R面逆时针方向整体转动180°
-	void OnFF(vector<string>::iterator&,int direction=0);		//F类似
-	void On_FF(vector<string>::iterator&,int direction=0);		//
-	void OnFF2(vector<string>::iterator&,int direction=0);		//
+	void OnR(vector<string>::iterator&);		//R面顺时针转动
+	void On_R(vector<string>::iterator&);		//R面逆时针转动
+	void OnR2(vector<string>::iterator&);		//R面转动180°
+	void OnF(vector<string>::iterator&);		//F面类似
+	void On_F(vector<string>::iterator&);		//
+	void OnF2(vector<string>::iterator&);		//
+	void OnRR(vector<string>::iterator&);		//魔方沿R面顺时针方向整体转动
+	void On_RR(vector<string>::iterator&);		//魔方沿R面逆时针方向整体转动
+	void OnRR2(vector<string>::iterator&);		//魔方沿R面逆时针方向整体转动180°
+	void OnFF(vector<string>::iterator&);		//F类似
+	void On_FF(vector<string>::iterator&);		//
+	void OnFF2(vector<string>::iterator&);		//
 
-	void GetLeftReadyAndTight(int direction=0);	//使左手复位至夹紧且U-D状态(90/270°状态)
-	void GetRightReadyAndTight(int direction=0);	//使右手复位至夹紧且U-D状态(90/270°状态)
-	void LeftLoose(int direction=0);				//松开左手
-	void LeftTight(int direction=0);				//夹紧左手
-	void LeftReady(int direction=0);				//左手复位至U-D状态(90/270°状态)
-	void RightLoose(int direction=0);				//松开右手
-	void RightTight(int direction=0);				//夹紧右手
-	void RightReady(int direction=0);				//右手复位至U-D状态(90/270°状态)
+	void GetLeftReadyAndTight();	//使左手复位至夹紧且U-D状态(90/270°状态)
+	void GetRightReadyAndTight();	//使右手复位至夹紧且U-D状态(90/270°状态)
+	void LeftLoose();				//松开左手
+	void LeftTight();				//夹紧左手
+	void LeftReady();				//左手复位至U-D状态(90/270°状态)
+	void RightLoose();				//松开右手
+	void RightTight();				//夹紧右手
+	void RightReady();				//右手复位至U-D状态(90/270°状态)
 	void GetShortestWay();			//核心成员函数，将target中存储的普通公式序列转换为机械手操作序列并存储到macVec容器中
 	void ShowOperations();			//打印操作序列，主要用于调试和测试
 	void Reset();
