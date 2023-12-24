@@ -291,6 +291,52 @@ void CubeExplorer::GetRightReadyAndTight() {
 	}
 }
 
+void CubeExplorer::GetStrNorVec() {
+	string::size_type lastSpace = 0;	//记录上一次遇到空格的位置
+	//将原始字符串分割为多个表示单个操作的字符串并存放到strNorVec容器中
+	string::size_type i = 0;
+	for (; i < target.length(); i++) {
+		if (target[i] == ' ') {
+			string strTemp;
+			for (string::size_type index = lastSpace; index < i; index++) {
+				strTemp.push_back(target[index]);
+			}
+			strNorVec.push_back(strTemp);
+			lastSpace = i + 1;
+		}
+	}
+}
+
+void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver) {
+	if (operation_seq.size() == 0) {
+		if (CubeExplorer::GetOperationTime(maneuver) < shortestTime) {
+			shortestTime = CubeExplorer::GetOperationTime(maneuver);
+			macVec = maneuver;
+		}
+	}
+	else {
+		auto iter = operation_seq.begin();
+		if (*iter == "R");
+		else if (*iter == "F");
+		else if (*iter == "R'");
+		else if (*iter == "F'");
+		else if (*iter == "R2");
+		else if (*iter == "F2");
+		else if (*iter == "B");
+		else if (*iter == "L");
+		else if (*iter == "U");
+		else if (*iter == "D");
+		else if (*iter == "B'");
+		else if (*iter == "L'");
+		else if (*iter == "U'");
+		else if (*iter == "D'");
+		else if (*iter == "B2");
+		else if (*iter == "L2");
+		else if (*iter == "U2");
+		else if (*iter == "D2");
+	}
+}
+
 void CubeExplorer::GetShortestWay() {
 	string::size_type lastSpace = 0;	//记录上一次遇到空格的位置
 	//将原始字符串分割为多个表示单个操作的字符串并存放到strNorVec容器中
@@ -547,9 +593,9 @@ void CubeExplorer::ShowOperations() {
 	cout << endl;
 }
 
-int CubeExplorer::GetOperationTime() {
+int CubeExplorer::GetOperationTime(vector<Operation> maneuver) {
 	int time = 0;
-	for (auto iter = macVec.cbegin(); iter != macVec.cend(); iter++) {
+	for (auto iter = maneuver.cbegin(); iter != maneuver.cend(); iter++) {
 		switch (*iter) {
 			case Operation::R: time += 1; break;
 			case Operation::_R: time += 1; break;
