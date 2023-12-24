@@ -869,8 +869,8 @@ void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1)
 	return;
 }
 
-int shortestTime;
-CubeExplorer cube_explorer;
+//int shortestTime;
+//CubeExplorer cube_explorer;
 
 void DFSearch2(int cp, int epud, int epm, int togo2)
 {
@@ -892,12 +892,12 @@ void DFSearch2(int cp, int epud, int epm, int togo2)
 			depthLimit = solution.len;
 			flag = 1;
 
-			cube_explorer.SetTarget(solution.equation[equtionNum]);
-			cube_explorer.GetShortestWay();
-			solution.time = cube_explorer.GetOperationTime();
-			cube_explorer.ShowOperations();
-			cube_explorer.Reset();
-			equtionNum++;
+			//cube_explorer.SetTarget(solution.equation[equtionNum]);
+			//cube_explorer.GetShortestWay();
+			//solution.time = cube_explorer.GetOperationTime();
+			//cube_explorer.ShowOperations();
+			//cube_explorer.Reset();
+			//equtionNum++;
 		}
 		return;
 	}
