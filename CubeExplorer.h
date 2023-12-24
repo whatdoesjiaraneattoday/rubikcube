@@ -51,6 +51,7 @@ private:
 	vector<string> vecStrSerial;		//保存转换后的串口序列字符串
 	string target;						//字符串，存储将要处理的普通公式序列
 	int shortestTime = 99999;
+	vector<Operation> finalVec;
 public:
 	HandState handState;	//自定义类HandState类型，表示当前机械手状态
 	vector<string> strNorVec;			//string容器，保存分割后得到的一个个表示单个公式操作的字符串
