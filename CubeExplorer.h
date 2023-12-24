@@ -87,6 +87,7 @@ public:
 	void RightReady();				//右手复位至U-D状态(90/270°状态)
 	void GetShortestWay();			//核心成员函数，将target中存储的普通公式序列转换为机械手操作序列并存储到macVec容器中
 	void ShowOperations();			//打印操作序列，主要用于调试和测试
+	int GetOperationTime();         //获取完成操作序列需要的时间
 	void Reset();
 };
 

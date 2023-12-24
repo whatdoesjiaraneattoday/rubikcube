@@ -1,5 +1,6 @@
 //魔方求解函数，通过DFS甲加上剪枝求解出魔方还原公式
 #include "CubeGenerate.h"
+#include "CubeExplorer.h"
 using namespace std;
 
 long long n_C_m(int n, int m)
@@ -818,7 +819,7 @@ void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1)
 
 	if (togo1 == 0) // 若阶段一已解决
 	{
-		if (twist == 0 && flip == 0 && slice == 0) // 似乎没有必要
+		if (twist == 0 && flip == 0 && slice == 0)
 		{
 			int index_corner_p = Cube.cube_state.index_corner_p;
 			for (int i = 1; i <= solution.len; i++)
@@ -868,6 +869,9 @@ void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1)
 	return;
 }
 
+int shortestTime;
+CubeExplorer cube_explorer;
+
 void DFSearch2(int cp, int epud, int epm, int togo2)
 {
 
@@ -885,9 +889,14 @@ void DFSearch2(int cp, int epud, int epm, int togo2)
 				solution.equation[equtionNum] = solution.equation[equtionNum] + operationTrans[solution.operate_sequence[i]] + " ";
 			}
 			cout << endl;
-
 			depthLimit = solution.len;
 			flag = 1;
+
+			cube_explorer.SetTarget(solution.equation[equtionNum]);
+			cube_explorer.GetShortestWay();
+			solution.time = cube_explorer.GetOperationTime();
+			cube_explorer.ShowOperations();
+			cube_explorer.Reset();
 			equtionNum++;
 		}
 		return;

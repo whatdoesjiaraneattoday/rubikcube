@@ -1,5 +1,4 @@
 #include"CubeExplorer.h"
-
 CubeExplorer::CubeExplorer(char* cstr,const HandState& hs):target(cstr),handState(hs){}
 
 void CubeExplorer::SetTarget(string str) { target = str; }
@@ -546,6 +545,26 @@ void CubeExplorer::ShowOperations() {
 	cout << "Final operations' count: " << cnt << endl;
 	cout << "All operations' count: " << macVec.size() << endl;
 	cout << endl;
+}
+
+int CubeExplorer::GetOperationTime() {
+	int time = 0;
+	for (auto iter = macVec.cbegin(); iter != macVec.cend(); iter++) {
+		switch (*iter) {
+			case Operation::R: time += 1; break;
+			case Operation::_R: time += 1; break;
+			case Operation::F: time += 1; break;
+			case Operation::_F: time += 1; break;
+			case Operation::R2: time += 1; break;
+			case Operation::F2: time += 1; break;
+			case Operation::LeftLoose: time += 1; break;
+			case Operation::LeftTight: time += 1; break;
+			case Operation::RightLoose: time += 1; break;
+			case Operation::RightTight: time += 1; break;
+		}
+	}
+	//cout << time << endl;
+	return time;
 }
 
 void CubeExplorer::Reset() {
