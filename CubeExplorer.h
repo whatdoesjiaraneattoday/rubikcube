@@ -53,6 +53,7 @@ private:
 	vector<Operation> macVec;			//自定义枚举类型Operation容器，保存转换后得到的机械手操作序列
 	string target;						//字符串，存储将要处理的普通公式序列
 	int shortestTime = 99999;
+	vector<Operation> finalVec;
 public:
 	HandState handState;	//自定义类HandState类型，表示当前机械手状态
 	int transCnt = 0;					//记录魔方翻转次数

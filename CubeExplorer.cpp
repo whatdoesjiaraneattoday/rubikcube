@@ -307,16 +307,20 @@ void CubeExplorer::GetStrNorVec() {
 	}
 }
 
-void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver) {
+void CubeExplorer::dfs(vector<string>& operation_seq, vector<Operation> macVec) {
 	if (operation_seq.size() == 0) {
-		if (CubeExplorer::GetOperationTime(maneuver) < shortestTime) {
-			shortestTime = CubeExplorer::GetOperationTime(maneuver);
-			macVec = maneuver;
+		if (CubeExplorer::GetOperationTime(macVec) < shortestTime) {
+			shortestTime = CubeExplorer::GetOperationTime(macVec);
+			finalVec = macVec;
 		}
 	}
 	else {
 		auto iter = operation_seq.begin();
-		if (*iter == "R");
+		if (*iter == "R")
+		{
+			OnR(iter);
+			operation_seq.erase(iter);
+		}
 		else if (*iter == "F");
 		else if (*iter == "R'");
 		else if (*iter == "F'");
@@ -324,7 +328,26 @@ void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver)
 		else if (*iter == "F2");
 		else if (*iter == "B");
 		else if (*iter == "L");
-		else if (*iter == "U");
+		else if (*iter == "U")
+		{
+			//策略1
+			OnFF(iter);
+			OnR(iter);
+			operation_seq.erase(iter);
+			auto macVec_iter1=macVec.end();
+			dfs(operation_seq,macVec);
+			//回溯
+		    auto macVec_iter2=macVec.end();
+			operation_seq.insert(operation_seq.begin(),*iter);
+			macVec.erase(macVec_iter1+1,macVec_iter2);
+			//策略2
+			On_RR(iter);
+			OnF(iter);
+			operation_seq.erase(iter);
+			auto macVec_iter1=macVec.end();
+			dfs(operation_seq,macVec);
+		
+		}
 		else if (*iter == "D");
 		else if (*iter == "B'");
 		else if (*iter == "L'");
