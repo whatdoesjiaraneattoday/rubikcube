@@ -92,7 +92,7 @@ public:
 	int GetOperationTime(vector<Operation> maneuver);         //获取完成操作序列需要的时间
 	void GetStrNorVec();            //将魔方序列字符串分割为单个字符
 	void Reset();
-	void dfs(vector<string> &operation_seq); // 迭代搜索最优机械手操作序列
+	void dfs(vector<string> operation_seq, vector<Operation> maneuver); // 迭代搜索最优机械手操作序列
 };
 
 
