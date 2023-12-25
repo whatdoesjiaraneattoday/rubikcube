@@ -453,8 +453,9 @@ void CubeExplorer::GetStrNorVec() {
 
 void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver) {
 	if (operation_seq.size() == 0) {
-		if (CubeExplorer::GetOperationTime(maneuver) < shortestTime) {
-			shortestTime = CubeExplorer::GetOperationTime(maneuver);
+		// cout << shortestTime << ' ' << GetOperationTime(maneuver) << endl;
+		if (GetOperationTime(maneuver) < shortestTime) {
+			shortestTime = GetOperationTime(maneuver);
 			macVec = maneuver;
 		}
 	}
@@ -505,14 +506,15 @@ void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver)
 			dfs(operation_seq2, maneuver2);
 		}
 		else if (*iter == "U") {
-			OnFF(operation_seq2, maneuver2);
-			OnR(operation_seq2, maneuver2); // 策略1
+			On_RR(operation_seq2, maneuver2);
+			OnF(operation_seq2, maneuver2); // 策略1
 			operation_seq2.erase(operation_seq2.begin());
 			dfs(operation_seq2, maneuver2);
 
 			operation_seq2 = operation_seq;
-			On_RR(operation_seq2, maneuver2);
-			OnF(operation_seq2, maneuver2); // 策略2
+			maneuver2 = maneuver;
+			OnFF(operation_seq2, maneuver2);
+			OnR(operation_seq2, maneuver2); // 策略2
 			operation_seq2.erase(operation_seq2.begin());
 			dfs(operation_seq2, maneuver2);
 		}
@@ -523,6 +525,7 @@ void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver)
 			dfs(operation_seq2, maneuver2);
 
 			operation_seq2 = operation_seq;
+			maneuver2 = maneuver;
 			On_FF(operation_seq2, maneuver2);
 			OnR(operation_seq2, maneuver2); // 策略2
 			operation_seq2.erase(operation_seq2.begin());
@@ -547,6 +550,7 @@ void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver)
 			dfs(operation_seq2, maneuver2);
 
 			operation_seq2 = operation_seq;
+			maneuver2 = maneuver;
 			On_RR(operation_seq2, maneuver2);
 			On_F(operation_seq2, maneuver2); // 策略2
 			operation_seq2.erase(operation_seq2.begin());
@@ -559,6 +563,7 @@ void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver)
 			dfs(operation_seq2, maneuver2);
 
 			operation_seq2 = operation_seq;
+			maneuver2 = maneuver;
 			OnRR(operation_seq2, maneuver2);
 			On_F(operation_seq2, maneuver2); // 策略2
 			operation_seq2.erase(operation_seq2.begin());
@@ -583,6 +588,7 @@ void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver)
 			dfs(operation_seq2, maneuver2);
 
 			operation_seq2 = operation_seq;
+			maneuver2 = maneuver;
 			On_RR(operation_seq2, maneuver2);
 			OnF2(operation_seq2, maneuver2); // 策略2
 			operation_seq2.erase(operation_seq2.begin());
@@ -595,6 +601,7 @@ void CubeExplorer::dfs(vector<string> operation_seq, vector<Operation> maneuver)
 			dfs(operation_seq2, maneuver2);
 
 			operation_seq2 = operation_seq;
+			maneuver2 = maneuver;
 			OnRR(operation_seq2, maneuver2);
 			OnF2(operation_seq2, maneuver2); // 策略2
 			operation_seq2.erase(operation_seq2.begin());

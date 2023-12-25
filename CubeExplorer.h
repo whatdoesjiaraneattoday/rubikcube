@@ -1,7 +1,7 @@
 #ifndef CUBE_EXPLORER_H
 #define CUBE_EXPLORER_H
 
-#define STRATEGY 1
+#define STRATEGY 0
 
 #include<vector>
 #include<string>
