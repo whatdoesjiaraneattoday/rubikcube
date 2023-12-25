@@ -109,4 +109,12 @@ int main()
 	cube_explorer.GetStrNorVec();
 	cube_explorer.dfs(cube_explorer.strNorVec, cube_explorer.macVec);
 	cube_explorer.ShowOperations();
+	cube_explorer.GetSerial();
+	cube_explorer.PrintSerial();
+
+	cube_explorer.Reset();
+	cube_explorer.SetTarget("R F D U U' L R");
+	cube_explorer.GetShortestWay();
+	cube_explorer.ShowOperations();
+	cube_explorer.PrintSerial();
 }

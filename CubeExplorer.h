@@ -78,6 +78,12 @@ public:
 	void OnFF(vector<string>& operation_seq, vector<Operation>& maneuver);		//F类似
 	void On_FF(vector<string>& operation_seq, vector<Operation>& maneuver);		//
 	void OnFF2(vector<string>& operation_seq, vector<Operation>& maneuver);		//
+	void OnRR_2(vector<string>::iterator& iter);                                // 常规优化中用到的转动函数
+	void On_RR_2(vector<string>::iterator& iter);                               //
+	void OnRR2_2(vector<string>::iterator& iter);                               //
+	void OnFF_2(vector<string>::iterator& iter);                                //
+	void On_FF_2(vector<string>::iterator& iter);                               //
+	void OnFF2_2(vector<string>::iterator& iter);                               //
 
 	void GetLeftReadyAndTight(vector<Operation>& maneuver);	//使左手复位至夹紧且U-D状态(90/270°状态)
 	void GetRightReadyAndTight(vector<Operation>& maneuver);	//使右手复位至夹紧且U-D状态(90/270°状态)
@@ -87,12 +93,14 @@ public:
 	void RightLoose(vector<Operation>& maneuver);				//松开右手
 	void RightTight(vector<Operation>& maneuver);				//夹紧右手
 	void RightReady(vector<Operation>& maneuver);				//右手复位至U-D状态(90/270°状态)
-	//void GetShortestWay();			//核心成员函数，将target中存储的普通公式序列转换为机械手操作序列并存储到macVec容器中
+	void GetShortestWay();			//核心成员函数，将target中存储的普通公式序列转换为机械手操作序列并存储到macVec容器中
 	void ShowOperations();			//打印操作序列，主要用于调试和测试
 	int GetOperationTime(vector<Operation> maneuver);         //获取完成操作序列需要的时间
 	void GetStrNorVec();            //将魔方序列字符串分割为单个字符
 	void Reset();
-	void dfs(vector<string> operation_seq, vector<Operation> maneuver); // 迭代搜索最优机械手操作序列
+	void dfs(vector<string> operation_seq, vector<Operation> maneuver); // 迭代搜索最优机械手操作序列，将target中存储的普通公式序列转换为机械手操作序列并存储到macVec容器中
+	void GetSerial();               //将机械手操作序列转化为串口命令
+	void PrintSerial();             //打印串口命令
 };
 
 
