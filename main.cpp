@@ -104,16 +104,17 @@ int main()
 	//}
 
 	/* 下面为DFS算法测试程序 */
+	// F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2
 	CubeExplorer cube_explorer;
-	cube_explorer.SetTarget("D B L' R2 L2 D F' U2 B' F L2 R' ");
+	cube_explorer.SetTarget("F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2 ");
 	cube_explorer.GetStrNorVec();
 	cube_explorer.dfs(cube_explorer.strNorVec, cube_explorer.macVec);
 	cube_explorer.ShowOperations();
 	cube_explorer.GetSerial();
-	//cube_explorer.PrintSerial();
+	cube_explorer.PrintSerial();
 
 	cube_explorer.Reset();
-	cube_explorer.SetTarget("D B L' R2 L2 D F' U2 B' F L2 R' ");
+	cube_explorer.SetTarget("F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2 ");
 	cube_explorer.GetShortestWay();
 	cube_explorer.ShowOperations();
 	//cube_explorer.PrintSerial();
