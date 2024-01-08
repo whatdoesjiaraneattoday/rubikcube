@@ -80,42 +80,41 @@ int main()
 	InitEpudPruneTable();
 	InitEpmPruneTable();
 
-	//cout << "欢迎来到简化版kociemba algorithm解魔方程序" << endl;
-	//cout << "请输入标准打乱公式" << endl;
-	//Cube.GetCube();
-	//Cube.EncodeCorner();
-	//Cube.EncodeEdge();
-	//extern Solution solution;
-	//solution.len = 0;
-	//solution.operate_sequence[0] = 7890;
-	//extern int depthLimit; // 搜索深度限制
-	//extern int flag;	   // 标志位，完成解算后置1，使程序直接退出阶段二的迭代，回到阶段一
-	//extern int serialNum;  // 解法编号
-	//extern int equtionNum;
-	//
-	//Search(Cube);
-	//for (int i = 0; i < equtionNum; i++)
-	//{
-	//	cube_explorer.SetTarget(solution.equation[i]);
-	//	cube_explorer.GetShortestWay();
-	//	cube_explorer.ShowOperations();
-
-	//	cube_explorer.Reset();
-	//}
-
-	/* 下面为DFS算法测试程序 */
-	// F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2
+	cout << "欢迎来到简化版kociemba algorithm解魔方程序" << endl;
+	cout << "请输入标准打乱公式" << endl;
+	Cube.GetCube();
+	Cube.EncodeCorner();
+	Cube.EncodeEdge();
+	extern Solution solution;
+	solution.len = 0;
+	solution.operate_sequence[0] = 7890;
+	extern int depthLimit; // 搜索深度限制
+	extern int flag;	   // 标志位，完成解算后置1，使程序直接退出阶段二的迭代，回到阶段一
+	extern int serialNum;  // 解法编号
+	extern int equtionNum;
+	
+	Search(Cube);
 	CubeExplorer cube_explorer;
-	cube_explorer.SetTarget("F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2 ");
+	cube_explorer.SetTarget(solution.equation[equtionNum]);
 	cube_explorer.GetStrNorVec();
 	cube_explorer.dfs(cube_explorer.strNorVec, cube_explorer.macVec);
 	cube_explorer.ShowOperations();
-	cube_explorer.GetSerial();
-	cube_explorer.PrintSerial();
 
 	cube_explorer.Reset();
-	cube_explorer.SetTarget("F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2 ");
-	cube_explorer.GetShortestWay();
-	cube_explorer.ShowOperations();
+	
+
+	/* 下面为DFS算法测试程序 */
+	//CubeExplorer cube_explorer;
+	//cube_explorer.SetTarget("F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2 ");
+	//cube_explorer.GetStrNorVec();
+	//cube_explorer.dfs(cube_explorer.strNorVec, cube_explorer.macVec);
+	//cube_explorer.ShowOperations();
+	//cube_explorer.GetSerial();
+	//cube_explorer.PrintSerial();
+
+	//cube_explorer.Reset();
+	//cube_explorer.SetTarget("F' U' L' R' F U2 F B' L' D' B L2 U2 F2 U2 R2 D R2 F2 L2 ");
+	//cube_explorer.GetShortestWay();
+	//cube_explorer.ShowOperations();
 	//cube_explorer.PrintSerial();
 }
