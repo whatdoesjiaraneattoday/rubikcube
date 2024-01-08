@@ -816,7 +816,8 @@ string operationTrans[18] = {"U", "U2", "U'", "D", "D2", "D'", "L", "L2", "L'",
 
 void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1)
 {
-
+	if (serialNum >= 5)
+		return;
 	if (togo1 == 0) // 若阶段一已解决
 	{
 		if (twist == 0 && flip == 0 && slice == 0)
@@ -874,7 +875,8 @@ void DFSearch1(CubeGenerate Cube, int twist, int flip, int slice, int togo1)
 
 void DFSearch2(int cp, int epud, int epm, int togo2)
 {
-
+	if (serialNum >= 5)
+		return;
 	if (flag)
 		return;
 	if (togo2 == 0)
@@ -897,7 +899,7 @@ void DFSearch2(int cp, int epud, int epm, int togo2)
 			//solution.time = cube_explorer.GetOperationTime();
 			//cube_explorer.ShowOperations();
 			//cube_explorer.Reset();
-			//equtionNum++;
+			equtionNum++;
 		}
 		return;
 	}
@@ -936,6 +938,8 @@ void Search(CubeGenerate Cube)
 
 	for (int i = x; i <= depthLimit; i++)
 	{
+		if (serialNum >= 5)
+			return;
 		DFSearch1(Cube, Cube.cube_state.index_corner_o, Cube.cube_state.index_edge_o, Cube.cube_state.index_combination, i);
 	}
 }

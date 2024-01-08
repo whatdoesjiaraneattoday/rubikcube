@@ -95,7 +95,7 @@ int main()
 	
 	Search(Cube);
 	CubeExplorer cube_explorer;
-	cube_explorer.SetTarget(solution.equation[equtionNum]);
+	cube_explorer.SetTarget(solution.equation[equtionNum-1]);
 	cube_explorer.GetStrNorVec();
 	cube_explorer.dfs(cube_explorer.strNorVec, cube_explorer.macVec);
 	cube_explorer.ShowOperations();
